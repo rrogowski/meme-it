@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="index.js" type="module"></script>
+    <link rel="stylesheet" href="src/styles/main-menu.css" />
+    <style>
+      body {
+        font-size: 2rem;
+        margin: 0;
+      }
+
+      button,
+      input {
+        font-size: inherit;
+        margin-bottom: 1rem;
+      }
+
+      .meme {
+        display: flex;
+        position: relative;
+      }
+
+      .meme img {
+        max-width: 100%;
+        max-height: 100%;
+      }
+
+      .meme .caption {
+        container-type: size;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        width: 100%;
+      }
+
+      .meme .caption p {
+        color: white;
+        font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+        font-size: 10cqh;
+        margin: 0;
+        position: absolute;
+        text-align: center;
+        text-shadow: 1px 1px 3px black;
+        text-transform: uppercase;
+        width: 100%;
+        word-break: break-word;
+      }
+
+      .meme .caption p:first-child {
+        top: 0;
+      }
+
+      .meme .caption p:last-child {
+        bottom: 0;
+      }
+    </style>
+  </head>
+  <body></body>
+</html>
