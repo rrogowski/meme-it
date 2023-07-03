@@ -9,7 +9,7 @@ import { CaptionImage } from "./src/views/caption-image.js";
 import { MainMenu } from "./src/views/main-menu.js";
 import { SelectImage } from "./src/views/select-image.js";
 import { SelectWinner } from "./src/views/select-winner.js";
-import { Meme } from "./src/views/shared.js";
+import { Meme } from "./src/views/meme.js";
 
 const HostSelectImageView = () => {
   if (state.game.turnPlayer === null) {
@@ -337,14 +337,14 @@ const INITIAL_STATE = {
   server: null,
 };
 
-initializeStateEmitter(INITIAL_STATE, (state) => {
-  console.log(state.client, state.server);
-  render(() => App(state));
-});
-
 // for testing purposes only
 const state = {
-  client: { caption: { top: "hello" }, name: "other", isHost: false },
+  client: {
+    caption: { top: "boi", bottom: "you know i had to do it to em" },
+    name: "other",
+    isHost: false,
+    preview: IMAGE_SRC_URL,
+  },
   server: {
     author: "other",
     canVote: true,
@@ -355,8 +355,15 @@ const state = {
     ],
     index: 1,
     names: ["other", "rogowski"],
-    phase: "SELECT_WINNER",
+    phase: "SELECT_IMAGE",
     uploader: "other",
   },
 };
-render(() => MainMenu(state));
+
+// Object.assign(INITIAL_STATE, state);
+// initializeStateEmitter(INITIAL_STATE, (state) => {
+//   console.log(state.client, state.server);
+//   render(() => App(state));
+// });
+
+// render(() => SelectImage({ ...state }));

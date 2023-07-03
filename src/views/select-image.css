@@ -1,0 +1,19 @@
+.select-image {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  padding: 1rem;
+  padding-bottom: 0;
+}
+
+.select-image input {
+  flex-shrink: 0;
+}
+
+.select-image .preview {
+  display: flex;
+  flex-grow: 1;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  justify-content: center;
+}

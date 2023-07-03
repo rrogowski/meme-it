@@ -1,21 +1,39 @@
 import { readFileAsDataURL } from "../api/file.js";
 import { uploadImage } from "../api/http.js";
 import { setClientState } from "../lib/state.js";
-import { button, div, img, input } from "../lib/ui.js";
+import { button, div, img, input, p } from "../lib/ui.js";
+import { Meme } from "./meme.js";
 
 export const SelectImage = ({ client, server }) => {
-  const { file, isHost, name, preview } = client;
+  const { caption, file, isHost, name, preview } = client;
   const { uploader } = server;
+
+  const topText = caption.top;
+  const bottomText = caption.bottom;
 
   if (isHost || name !== uploader) {
     return `Waiting for ${uploader} to upload an image`;
   }
 
   const submitImage = () => uploadImage(file);
+  // return div(
+  //   { className: "select-image" },
+  //   input({ accept: "image/*", key: "file", onchange: setFile, type: "file" }),
+  //   div(
+  //     { className: "preview" },
+  //     preview ? Meme({ src: preview, topText, bottomText }) : null
+  //   ),
+  //   button("Submit Image", { disabled: !preview, onclick: submitImage })
+  // );
+
   return div(
-    input({ accept: "image/*", key: "file", onchange: setFile, type: "file" }),
-    preview ? img({ src: preview }) : null,
-    button("Submit Image", { disabled: !preview, onclick: submitImage })
+    {
+      style: "background-color: red; width: 500px; height: 500px;",
+    },
+    img({
+      style: "max-width: 100%; max-height: 100%",
+      src: preview,
+    })
   );
 };
 

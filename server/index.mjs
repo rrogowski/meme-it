@@ -171,7 +171,7 @@ const server = createServer((request, response) => {
     case "/image":
       response.setHeader("Access-Control-Allow-Origin", "*");
       response.setHeader("Content-Type", "image/png");
-      response.write(image ?? readFileSync("./img.png"));
+      response.write(image ?? readFileSync("./a.png"));
       response.end();
       break;
     case "/caption": {

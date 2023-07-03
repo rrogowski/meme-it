@@ -2,8 +2,21 @@
 <html>
   <head>
     <script src="index.js" type="module"></script>
-    <link rel="stylesheet" href="src/styles/main-menu.css" />
+    <link rel="stylesheet" href="src/views/main-menu.css" />
+    <link rel="stylesheet" href="src/views/meme.css" />
+    <link rel="stylesheet" href="src/views/select-image.css" />
     <style>
+      img {
+        max-height: 100%;
+        max-width: 100%;
+      }
+    </style>
+    <!-- <style>
+      * {
+        box-sizing: border-box;
+        font-size: inherit;
+      }
+
       body {
         font-size: 2rem;
         margin: 0;
@@ -11,49 +24,151 @@
 
       button,
       input {
-        font-size: inherit;
         margin-bottom: 1rem;
       }
-
-      .meme {
-        display: flex;
-        position: relative;
-      }
-
-      .meme img {
-        max-width: 100%;
-        max-height: 100%;
-      }
-
-      .meme .caption {
-        container-type: size;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        width: 100%;
-      }
-
-      .meme .caption p {
-        color: white;
-        font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
-        font-size: 10cqh;
-        margin: 0;
-        position: absolute;
-        text-align: center;
-        text-shadow: 1px 1px 3px black;
-        text-transform: uppercase;
-        width: 100%;
-        word-break: break-word;
-      }
-
-      .meme .caption p:first-child {
-        top: 0;
-      }
-
-      .meme .caption p:last-child {
-        bottom: 0;
-      }
-    </style>
+    </style> -->
   </head>
-  <body></body>
+  <body>
+    <!-- <div
+      class="container"
+      style="height: 300px; width: 100px; border: dashed red 5px"
+    > -->
+    <!-- <div
+        style="
+          display: flex;
+          flex-direction: column;
+          border: dashed blue 5px;
+          position: relative;
+        "
+      >
+        <img src="img.png" />
+        <div
+          style="
+            position: absolute;
+            border: dashed purple 5px;
+            height: min(100%, 100cqh);
+            width: 100%;
+          "
+        >
+          <div
+            style="
+              display: flex;
+              flex-direction: row;
+              border: dashed yellow 5px;
+              position: relative;
+              height: 100%;
+            "
+          >
+            <img src="portrait.jpeg" />
+          </div>
+        </div>
+      </div> -->
+    <!-- </div> -->
+    <div
+      style="
+        height: 50vh;
+        width: 50vw;
+        border: dashed red 5px;
+        container-type: size;
+      "
+    >
+      <div style="display: flex; flex-direction: column; position: relative">
+        <img src="img.png" style="opacity: 0" />
+        <div
+          style="
+            position: absolute;
+
+            height: min(100%, 100cqh);
+            width: 100%;
+            container-type: size;
+          "
+        >
+          <div
+            style="
+              display: inline-flex;
+              flex-direction: row;
+
+              position: relative;
+              height: 100%;
+            "
+          >
+            <img src="img.png" />
+            <div
+              style="
+                container-type: size;
+                position: absolute;
+
+                height: 100%;
+                width: 100%;
+              "
+            >
+              <p
+                style="
+                  position: absolute;
+                  top: 0;
+                  color: white;
+                  font-size: 10cqh;
+                  margin: 0;
+                "
+              >
+                Top
+              </p>
+              <p
+                style="
+                  position: absolute;
+                  bottom: 0;
+                  color: white;
+                  font-size: 10cqh;
+                  margin: 0;
+                "
+              >
+                Bottom
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div style="height: 100px; width: 100px">
+      <div
+        style="
+          display: flex;
+          flex-direction: row;
+          container-type: size;
+          height: 100%;
+        "
+      >
+        <img
+          src="portrait.jpeg"
+          style="max-width: 100%; max-height: 100%; opacity: 0"
+        />
+        <div
+          style="
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+          "
+        >
+          <img src="portrait.jpeg" style="max-width: 100%; max-height: 100%" />
+          <div style="position: absolute; height: 100cqh"></div>
+        </div>
+      </div>
+    </div> -->
+    <!-- <div class="meta">
+      <div class="pic">
+        <img src="img.png" />
+      </div>
+    </div>
+    <div class="meta">
+      <div class="pic">
+        <img src="img.png" />
+      </div>
+    </div>
+    <div class="meta">
+      <div class="pic">
+        <img src="portrait.jpeg" />
+      </div>
+    </div> -->
+  </body>
 </html>
