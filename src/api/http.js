@@ -1,4 +1,4 @@
-const SERVER_IP = "http://localhost:8000";
+const SERVER_IP = "http://192.168.1.66:8000";
 
 export const IMAGE_SRC_URL = SERVER_IP.concat("/image");
 

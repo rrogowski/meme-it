@@ -360,10 +360,19 @@ const state = {
   },
 };
 
-// Object.assign(INITIAL_STATE, state);
-// initializeStateEmitter(INITIAL_STATE, (state) => {
-//   console.log(state.client, state.server);
-//   render(() => App(state));
-// });
+Object.assign(INITIAL_STATE, state);
+initializeStateEmitter(INITIAL_STATE, (state) => {
+  console.log(state.client, state.server);
+  render(() => App(state));
+});
 
-// render(() => SelectImage({ ...state }));
+render(() => {
+  return div(
+    { style: "width: 100vw; height: 100vh" },
+    Meme({
+      src: state.client.preview,
+      topText: "hello hello hello hello hello hello hello hello hello",
+      bottomText: "boi",
+    })
+  );
+});
