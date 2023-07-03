@@ -16,24 +16,14 @@ export const SelectImage = ({ client, server }) => {
   }
 
   const submitImage = () => uploadImage(file);
-  // return div(
-  //   { className: "select-image" },
-  //   input({ accept: "image/*", key: "file", onchange: setFile, type: "file" }),
-  //   div(
-  //     { className: "preview" },
-  //     preview ? Meme({ src: preview, topText, bottomText }) : null
-  //   ),
-  //   button("Submit Image", { disabled: !preview, onclick: submitImage })
-  // );
-
   return div(
-    {
-      style: "background-color: red; width: 500px; height: 500px;",
-    },
-    img({
-      style: "max-width: 100%; max-height: 100%",
-      src: preview,
-    })
+    { className: "select-image" },
+    input({ accept: "image/*", key: "file", onchange: setFile, type: "file" }),
+    div(
+      { className: "preview" },
+      preview ? Meme({ src: preview, topText, bottomText }) : null
+    ),
+    button("Submit Image", { disabled: !preview, onclick: submitImage })
   );
 };
 

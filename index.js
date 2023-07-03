@@ -367,12 +367,5 @@ initializeStateEmitter(INITIAL_STATE, (state) => {
 });
 
 render(() => {
-  return div(
-    { style: "width: 100vw; height: 100vh" },
-    Meme({
-      src: state.client.preview,
-      topText: "hello hello hello hello hello hello hello hello hello",
-      bottomText: "boi",
-    })
-  );
+  return div({ style: "width: 100vw; height: 100vh" }, SelectImage(state));
 });

@@ -5,16 +5,19 @@
 }
 
 .meme .height-bounding-container {
-  container-type: size;
+  border: dashed red 5px;
+  /* container-type: size; */
+  /* display: flex; */
+  /* justify-content: center; */
   height: min(100%, 100cqh);
   position: absolute;
   width: 100%;
 }
 
 .meme .width-bounding-container {
+  border: dashed blue 5px;
   display: inline-flex;
   height: 100%;
-  flex-direction: row;
   position: relative;
 }
 
