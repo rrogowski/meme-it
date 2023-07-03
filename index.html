@@ -73,31 +73,33 @@
       "
     >
       <div style="display: flex; flex-direction: column; position: relative">
-        <img src="img.png" style="opacity: 0" />
+        <img src="portrait.jpeg" />
+        <!-- Blue border bounds the height -->
         <div
           style="
             position: absolute;
-
+            border: dashed blue 5px;
             height: min(100%, 100cqh);
             width: 100%;
             container-type: size;
           "
         >
+          <!-- Purple bounds the width -->
           <div
             style="
               display: inline-flex;
               flex-direction: row;
-
+              border: dashed purple 5px;
               position: relative;
               height: 100%;
             "
           >
-            <img src="img.png" />
+            <img src="portrait.jpeg" />
             <div
               style="
                 container-type: size;
                 position: absolute;
-
+                border: dashed yellow 5px;
                 height: 100%;
                 width: 100%;
               "
