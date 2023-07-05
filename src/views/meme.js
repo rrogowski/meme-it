@@ -3,10 +3,27 @@ import { div, img, p } from "../lib/ui.js";
 export const Meme = ({ bottomText, src, topText }) => {
   return div(
     { className: "meme" },
-    AutoSizingImageContainer(
-      { src },
-      img({ src }),
-      div({ className: "caption" }, p(topText), p(bottomText))
+    div(
+      { className: "vertical-align" },
+      div(
+        { className: "vertical-boundary" },
+        img({ className: "vertically-bounded-image", src }),
+        div(
+          { className: "vertically-bounded-container" },
+          div(
+            { className: "horizontal-align" },
+            div(
+              { className: "horizontal-boundary" },
+              img({ className: "horizontally-bounded-image", src }),
+              div(
+                { className: "horizontally-bounded-container" },
+                p(topText),
+                p(bottomText)
+              )
+            )
+          )
+        )
+      )
     )
   );
 };

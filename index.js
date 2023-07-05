@@ -384,48 +384,7 @@ render(() => {
         {
           style: style.concat("border: solid black 2px; margin-bottom: 1rem;"),
         },
-        div(
-          { className: "meme" },
-          div(
-            {
-              style: "max-height: 100%;  position: relative;",
-            },
-            img({
-              src,
-              style:
-                "width: 100%; max-height: 100%; vertical-align: middle; visibility: hidden;",
-            }),
-            div(
-              {
-                style: "position: absolute;  top: 0; width: 100%; height: 100%",
-              },
-              div(
-                {
-                  style:
-                    "height: 100%; display: flex; flex-direction: row; justify-content: center;",
-                },
-                div(
-                  {
-                    style: " max-width: 100%; position: relative;",
-                  },
-                  img({
-                    src,
-                    style:
-                      "height: 100%; max-width: 100%; vertical-align: middle;",
-                  }),
-                  div(
-                    {
-                      style:
-                        "position: absolute;  top: 0; width: 100%; height: 100%; container-type: size;",
-                    },
-                    p({ className: "text text-top" }, "Top Text"),
-                    p({ className: "text text-bottom" }, "Bottom Text")
-                  )
-                )
-              )
-            )
-          )
-        )
+        Meme({ src, topText: "Top Text", bottomText: "Bottom Text" })
       );
     })
   );
