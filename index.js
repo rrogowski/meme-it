@@ -360,12 +360,134 @@ const state = {
   },
 };
 
-Object.assign(INITIAL_STATE, state);
-initializeStateEmitter(INITIAL_STATE, (state) => {
-  console.log(state.client, state.server);
-  render(() => App(state));
-});
+// Object.assign(INITIAL_STATE, state);
+// initializeStateEmitter(INITIAL_STATE, (state) => {
+//   console.log(state.client, state.server);
+//   render(() => App(state));
+// });
+
+// render(() => {
+//   return div({ style: "width: 100vw; height: 100vh" }, SelectImage(state));
+// });
+
+const configs = [
+  { src: "a.png", style: "width: 200px; height: 146px;" },
+  { src: "portrait.jpeg", style: "width: 200px; height: 260px;" },
+  { src: "a.png", style: "width: 156px; height: 200px;" },
+  { src: "portrait.jpeg", style: "width: 250px; height: 200px;" },
+];
 
 render(() => {
-  return div({ style: "width: 100vw; height: 100vh" }, SelectImage(state));
+  return div(
+    ...configs.map(({ src, style }) => {
+      return div(
+        {
+          style: style.concat("border: solid black 2px; margin-bottom: 1rem;"),
+        },
+        div(
+          { className: "meme" },
+          div(
+            {
+              style: "max-height: 100%;  position: relative;",
+            },
+            img({
+              src,
+              style:
+                "width: 100%; max-height: 100%; vertical-align: middle; visibility: hidden;",
+            }),
+            div(
+              {
+                style: "position: absolute;  top: 0; width: 100%; height: 100%",
+              },
+              div(
+                {
+                  style:
+                    "height: 100%; display: flex; flex-direction: row; justify-content: center;",
+                },
+                div(
+                  {
+                    style: " max-width: 100%; position: relative;",
+                  },
+                  img({
+                    src,
+                    style:
+                      "height: 100%; max-width: 100%; vertical-align: middle;",
+                  }),
+                  div(
+                    {
+                      style:
+                        "position: absolute;  top: 0; width: 100%; height: 100%; container-type: size;",
+                    },
+                    p({ className: "text text-top" }, "Top Text"),
+                    p({ className: "text text-bottom" }, "Bottom Text")
+                  )
+                )
+              )
+            )
+          )
+        )
+      );
+    })
+  );
+  // div(
+  //   { style: "width: 200px; height: 200px; border: dashed red 5px;" },
+  //   div(
+  //     {
+  //       style:
+  //         "display: flex; flex-direction: column; border: dashed blue 5px;",
+  //     },
+  //     img({ src: "a.png" }),
+  //     div({ style: "position: absolute; border: dashed yellow 5px" })
+  //   )
+  // ),
+  // div(
+  //   { style: "width: 200px; height: 200px; border: dashed red 5px;" },
+  //   div(
+  //     {
+  //       style:
+  //         "display: flex; flex-direction: column; border: dashed blue 5px;",
+  //     },
+  //     img({ src: "portrait.jpeg" })
+  //   )
+  // ),
+  // div(
+  //   { style: "width: 300px; height: 200px; border: dashed red 5px;" },
+  //   div(
+  //     {
+  //       style:
+  //         "display: flex; flex-direction: column; border: dashed blue 5px;",
+  //     },
+  //     img({ src: "a.png" }),
+  //     div({ style: "position: absolute; border: dashed yellow 5px" })
+  //   )
+  // ),
+  // div(
+  //   { style: "width: 200px; height: 300px; border: dashed red 5px;" },
+  //   div(
+  //     {
+  //       style:
+  //         "display: flex; flex-direction: column; border: dashed blue 5px;",
+  //     },
+  //     img({ src: "portrait.jpeg" })
+  //   )
+  // )
+  // div(
+  //   { style: "width: 200px; height: 200px; border: dashed red 5px;" },
+  //   div(
+  //     {
+  //       style: "display: inline-flex; height: 100%",
+  //     },
+  //     img({ src: "a.png" })
+  //   )
+  // ),
+  // div(
+  //   { style: "width: 200px; height: 200px; border: dashed red 5px;" },
+  //   div(
+  //     {
+  //       style: "display: inline-flex; height: 100%",
+  //     },
+  //     img({ src: "portrait.jpeg" })
+  //   )
+  // )
+  // );
 });

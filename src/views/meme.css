@@ -1,14 +1,15 @@
-.meme {
+/* .meme {
   container-type: size;
   height: 100%;
   width: 100%;
-}
+} */
 
+/* 
 .meme .height-bounding-container {
   border: dashed red 5px;
-  /* container-type: size; */
-  /* display: flex; */
-  /* justify-content: center; */
+  container-type: size;
+  display: flex;
+  justify-content: center;
   height: min(100%, 100cqh);
   position: absolute;
   width: 100%;
@@ -46,5 +47,33 @@
 }
 
 .meme .caption p:last-child {
+  bottom: 0;
+} */
+
+.meme {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+}
+
+.text {
+  color: white;
+  font-family: Impact;
+  font-size: 10cqh;
+  margin: 0;
+  position: absolute;
+  text-align: center;
+  text-shadow: 1px 1px 3px black;
+  text-transform: uppercase;
+  width: 100%;
+  word-break: break-word;
+}
+
+.text.text-top {
+  top: 0;
+}
+
+.text.text-bottom {
   bottom: 0;
 }
