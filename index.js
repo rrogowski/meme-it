@@ -341,7 +341,7 @@ const INITIAL_STATE = {
 const state = {
   client: {
     caption: { top: "boi", bottom: "you know i had to do it to em" },
-    name: "other",
+    name: "rogowski",
     isHost: false,
     preview: IMAGE_SRC_URL,
   },
@@ -356,97 +356,14 @@ const state = {
     index: 1,
     names: ["other", "rogowski"],
     phase: "SELECT_IMAGE",
+    src: "http://192.168.1.66:8000/image",
     uploader: "other",
   },
 };
 
-// Object.assign(INITIAL_STATE, state);
-// initializeStateEmitter(INITIAL_STATE, (state) => {
-//   console.log(state.client, state.server);
-//   render(() => App(state));
-// });
-
-// render(() => {
-//   return div({ style: "width: 100vw; height: 100vh" }, SelectImage(state));
-// });
-
-const configs = [
-  { src: "a.png", style: "width: 200px; height: 146px;" },
-  { src: "portrait.jpeg", style: "width: 200px; height: 260px;" },
-  { src: "a.png", style: "width: 156px; height: 200px;" },
-  { src: "portrait.jpeg", style: "width: 250px; height: 200px;" },
-];
-
-render(() => {
-  return div(
-    ...configs.map(({ src, style }) => {
-      return div(
-        {
-          style: style.concat("border: solid black 2px; margin-bottom: 1rem;"),
-        },
-        Meme({ src, topText: "Top Text", bottomText: "Bottom Text" })
-      );
-    })
-  );
-  // div(
-  //   { style: "width: 200px; height: 200px; border: dashed red 5px;" },
-  //   div(
-  //     {
-  //       style:
-  //         "display: flex; flex-direction: column; border: dashed blue 5px;",
-  //     },
-  //     img({ src: "a.png" }),
-  //     div({ style: "position: absolute; border: dashed yellow 5px" })
-  //   )
-  // ),
-  // div(
-  //   { style: "width: 200px; height: 200px; border: dashed red 5px;" },
-  //   div(
-  //     {
-  //       style:
-  //         "display: flex; flex-direction: column; border: dashed blue 5px;",
-  //     },
-  //     img({ src: "portrait.jpeg" })
-  //   )
-  // ),
-  // div(
-  //   { style: "width: 300px; height: 200px; border: dashed red 5px;" },
-  //   div(
-  //     {
-  //       style:
-  //         "display: flex; flex-direction: column; border: dashed blue 5px;",
-  //     },
-  //     img({ src: "a.png" }),
-  //     div({ style: "position: absolute; border: dashed yellow 5px" })
-  //   )
-  // ),
-  // div(
-  //   { style: "width: 200px; height: 300px; border: dashed red 5px;" },
-  //   div(
-  //     {
-  //       style:
-  //         "display: flex; flex-direction: column; border: dashed blue 5px;",
-  //     },
-  //     img({ src: "portrait.jpeg" })
-  //   )
-  // )
-  // div(
-  //   { style: "width: 200px; height: 200px; border: dashed red 5px;" },
-  //   div(
-  //     {
-  //       style: "display: inline-flex; height: 100%",
-  //     },
-  //     img({ src: "a.png" })
-  //   )
-  // ),
-  // div(
-  //   { style: "width: 200px; height: 200px; border: dashed red 5px;" },
-  //   div(
-  //     {
-  //       style: "display: inline-flex; height: 100%",
-  //     },
-  //     img({ src: "portrait.jpeg" })
-  //   )
-  // )
-  // );
+initializeStateEmitter(state, (state) => {
+  console.log(state.client, state.server);
+  render(() => {
+    return CaptionImage(state);
+  });
 });

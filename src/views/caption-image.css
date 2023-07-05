@@ -1,4 +1,4 @@
-.select-image {
+.caption-image {
   display: flex;
   height: 100vh;
   flex-direction: column;
@@ -6,12 +6,12 @@
   padding-bottom: 0;
 }
 
-.select-image input,
-.select-image button {
+.caption-image input,
+.caption-image button {
   flex-shrink: 0;
 }
 
-.select-image .preview {
+.caption-image .preview {
   flex-grow: 1;
   margin-bottom: 1rem;
   overflow: hidden;

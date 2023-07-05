@@ -5,11 +5,8 @@ import { button, div, img, input, p } from "../lib/ui.js";
 import { Meme } from "./meme.js";
 
 export const SelectImage = ({ client, server }) => {
-  const { caption, file, isHost, name, preview } = client;
+  const { file, isHost, name, preview } = client;
   const { uploader } = server;
-
-  const topText = caption.top;
-  const bottomText = caption.bottom;
 
   if (isHost || name !== uploader) {
     return `Waiting for ${uploader} to upload an image`;
@@ -19,10 +16,7 @@ export const SelectImage = ({ client, server }) => {
   return div(
     { className: "select-image" },
     input({ accept: "image/*", key: "file", onchange: setFile, type: "file" }),
-    div(
-      { className: "preview" },
-      preview ? Meme({ src: preview, topText, bottomText }) : null
-    ),
+    div({ className: "preview" }, preview ? Meme({ src: preview }) : null),
     button("Submit Image", { disabled: !preview, onclick: submitImage })
   );
 };
