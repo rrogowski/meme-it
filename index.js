@@ -341,7 +341,7 @@ const INITIAL_STATE = {
 const state = {
   client: {
     caption: { top: "boi", bottom: "you know i had to do it to em" },
-    name: "rogowski",
+    name: "other",
     isHost: false,
     preview: IMAGE_SRC_URL,
   },
@@ -364,6 +364,6 @@ const state = {
 initializeStateEmitter(state, (state) => {
   console.log(state.client, state.server);
   render(() => {
-    return CaptionImage(state);
+    return MainMenu(state);
   });
 });

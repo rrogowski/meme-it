@@ -6,6 +6,10 @@
   padding-bottom: 0;
 }
 
+.select-image input[type="file"] {
+  display: none;
+}
+
 .select-image input,
 .select-image button {
   flex-shrink: 0;

@@ -12,14 +12,11 @@ export const Meme = ({ bottomText, src, topText }) => {
           { className: "vertically-bounded-container" },
           div(
             { className: "horizontal-align" },
+            img({ className: "horizontally-bounded-image", src }),
             div(
-              { className: "horizontal-boundary" },
-              img({ className: "horizontally-bounded-image", src }),
-              div(
-                { className: "horizontally-bounded-container" },
-                p(topText),
-                p(bottomText)
-              )
+              { className: "horizontally-bounded-container" },
+              p(topText),
+              p(bottomText)
             )
           )
         )

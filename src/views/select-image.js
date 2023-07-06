@@ -12,13 +12,32 @@ export const SelectImage = ({ client, server }) => {
     return `Waiting for ${uploader} to upload an image`;
   }
 
+  const { fileInput, openFileDialog } = createFileInput();
+
   const submitImage = () => uploadImage(file);
   return div(
     { className: "select-image" },
-    input({ accept: "image/*", key: "file", onchange: setFile, type: "file" }),
+    fileInput,
+    button("Choose File", { onclick: openFileDialog }),
     div({ className: "preview" }, preview ? Meme({ src: preview }) : null),
     button("Submit Image", { disabled: !preview, onclick: submitImage })
   );
+};
+
+const createFileInput = () => {
+  const fileInput = input({
+    accept: "image/*",
+    key: "file",
+    onchange: setFile,
+    type: "file",
+  });
+
+  const openFileDialog = () => {
+    const event = new MouseEvent("click");
+    fileInput.dispatchEvent(event);
+  };
+
+  return { fileInput, openFileDialog };
 };
 
 const setFile = (event) => {
