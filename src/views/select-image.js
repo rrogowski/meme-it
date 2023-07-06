@@ -1,4 +1,4 @@
-import { readFileAsDataURL } from "../api/file.js";
+import { readFileAsArrayBuffer, readFileAsDataURL } from "../api/file.js";
 import { uploadImage } from "../api/http.js";
 import { setClientState } from "../lib/state.js";
 import { button, div, img, input, p } from "../lib/ui.js";
@@ -18,7 +18,11 @@ export const SelectImage = ({ client, server }) => {
 
   const { fileInput, openFileDialog } = createFileInput();
 
-  const submitImage = () => uploadImage(file);
+  const submitImage = () => {
+    readFileAsArrayBuffer(file, (result) => {
+      uploadImage(result);
+    });
+  };
   return div(
     { className: "select-image" },
     fileInput,

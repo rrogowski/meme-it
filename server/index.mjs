@@ -1,12 +1,14 @@
 import { createHash } from "crypto";
+import { lookup } from "dns";
 import { readFileSync } from "fs";
 import { createServer } from "http";
-import { URL } from "url";
-import { lookup } from "dns";
 import { hostname } from "os";
+import { URL } from "url";
 
 const PORT = 8000;
 const WEB_SOCKET_GUID = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11";
+
+let serverAddress = null;
 
 const handleWebSocketUpgrade = (request, socket) => {
   acceptWebSocketUpgrade(request, socket);
@@ -78,7 +80,11 @@ const sendTextFrame = function (socket, text) {
 const applyPartialReducer = (state, action) => {
   switch (action.type) {
     case "IMAGE_UPLOADED":
-      return { phase: "CAPTION_IMAGE", captions: [] };
+      return {
+        phase: "CAPTION_IMAGE",
+        captions: [],
+        src: `http://${serverAddress}:${PORT}/image`,
+      };
     case "PLAYER_CONNECTED":
       return {
         names: state.names.concat(action.payload.name),
@@ -118,7 +124,8 @@ const handleWebSocketConnect = (request, socket) => {
 
   const url = new URL(request.url, `ws://${request.headers.host}`);
   const name = url.searchParams.get("name");
-  if (name === "host" || gameState.names.includes(name)) {
+  const isHost = url.searchParams.get("isHost");
+  if (isHost === "true") {
     updateGameState({ type: "HOST_CONNECTED", payload: {} });
   } else {
     updateGameState({ type: "PLAYER_CONNECTED", payload: { name } });
@@ -171,9 +178,10 @@ const server = createServer((request, response) => {
       });
       break;
     case "/image":
+      console.log("image requested");
       response.setHeader("Access-Control-Allow-Origin", "*");
       response.setHeader("Content-Type", "image/png");
-      response.write(image ?? readFileSync("a.png"));
+      response.write(image);
       response.end();
       break;
     case "/caption": {
@@ -217,12 +225,13 @@ const server = createServer((request, response) => {
 
 server.on("upgrade", handleWebSocketUpgrade);
 
-lookup(hostname(), (error, serverAddress) => {
+lookup(hostname(), (error, _serverAddress) => {
   if (error) {
     console.error(error);
     return;
   }
+  serverAddress = _serverAddress;
   server.listen(PORT, () => {
-    console.log(`Server running at http://${serverAddress}:${PORT}`);
+    console.log(`Server running at http://${_serverAddress}:${PORT}`);
   });
 });

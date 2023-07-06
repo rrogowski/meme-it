@@ -4,7 +4,7 @@ const SERVER_HREF = `ws://${window.location.hostname}:8000`;
 
 export const createWebSocketConnection = ({ isHost, name }) => {
   const searchParams = new URLSearchParams({ isHost, name });
-  const webSocketUrl = SERVER_HREF.concat(`/${searchParams}`);
+  const webSocketUrl = SERVER_HREF.concat(`/connect?${searchParams}`);
   const socket = new WebSocket(webSocketUrl);
   let body = "";
   socket.addEventListener("message", ({ data }) => {

@@ -22,6 +22,9 @@ const createNativeComponent = (tagName) => {
 const getModifiedAttributes = (element, attributes) => {
   const entries = Object.entries(attributes);
   const modifiedEntries = entries.filter(([name, value]) => {
+    if (name === "src") {
+      console.log("original", element[name], "new", value);
+    }
     return element[name] !== value;
   });
   return Object.fromEntries(modifiedEntries);

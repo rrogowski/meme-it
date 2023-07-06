@@ -24,36 +24,13 @@ const getView = (phase) => {
 };
 
 const INITIAL_STATE = {
-  client: { name: "" },
+  client: { bottomText: null, name: null, topText: null },
   server: null,
 };
 
-// for testing purposes only
-const state = {
-  client: {
-    caption: { top: "boi", bottom: "you know i had to do it to em" },
-    name: "other",
-    isHost: true,
-    preview: "http://192.168.1.66:8000/image",
-  },
-  server: {
-    canVote: true,
-    captions: [
-      { author: "rogowski", top: "helo", bottom: "boi", wasViewed: true },
-      // { author: "other", top: "helo", bottom: "boi" },
-      // { author: "other", top: "helo", bottom: "boi" },
-    ],
-    index: 0,
-    names: ["other", "rogowski"],
-    phase: "SELECT_IMAGE",
-    src: "http://192.168.1.66:8000/image",
-    uploader: "other",
-  },
-};
-
-initializeStateEmitter(state, (state) => {
+initializeStateEmitter(INITIAL_STATE, (state) => {
   console.log(state.client, state.server);
   render(() => {
-    return RevealMemes(state);
+    return App(state);
   });
 });

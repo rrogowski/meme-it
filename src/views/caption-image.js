@@ -4,7 +4,7 @@ import { button, div, input, p } from "../lib/ui.js";
 import { Meme } from "./meme.js";
 
 export const CaptionImage = ({ client, server }) => {
-  const { caption, isHost, name } = client;
+  const { bottomText, isHost, name, topText } = client;
   const { captions, names, src, uploader } = server;
 
   const namesPendingCaption = getNamesPendingCaption(captions, names, uploader);
@@ -23,31 +23,32 @@ export const CaptionImage = ({ client, server }) => {
   }
 
   const setTopText = (event) => {
-    setClientState({ caption: { ...caption, top: event.target.value } });
+    setClientState({ topText: event.target.value });
   };
   const setBottomText = (event) => {
-    setClientState({ caption: { ...caption, bottom: event.target.value } });
+    setClientState({ bottomText: event.target.value });
   };
-  const submitCaption = () => postCaption({ ...caption, author: name });
+  const submitCaption = () =>
+    postCaption({ author: name, bottomText, topText });
   return div(
     { className: "caption-image" },
-    div(
-      { className: "preview" },
-      Meme({ src, topText: caption.top, bottomText: caption.bottom })
-    ),
+    div({ className: "preview" }, Meme({ bottomText, src, topText })),
     input({
       key: "top-text",
       oninput: setTopText,
       placeholder: "Top Text",
-      value: caption.top ?? null,
+      value: topText,
     }),
     input({
       key: "bottom-text",
       oninput: setBottomText,
       placeholder: "Bottom Text",
-      value: caption.bottom ?? null,
+      value: bottomText,
     }),
-    button("Submit", { onclick: submitCaption })
+    button("Submit", {
+      disabled: !bottomText && !topText,
+      onclick: submitCaption,
+    })
   );
 };
 
