@@ -2,6 +2,8 @@ import { createHash } from "crypto";
 import { readFileSync } from "fs";
 import { createServer } from "http";
 import { URL } from "url";
+import { lookup } from "dns";
+import { hostname } from "os";
 
 const PORT = 8000;
 const WEB_SOCKET_GUID = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11";
@@ -215,6 +217,12 @@ const server = createServer((request, response) => {
 
 server.on("upgrade", handleWebSocketUpgrade);
 
-server.listen(PORT, () => {
-  console.log(`Server running at http://127.0.0.1:${PORT}/`);
+lookup(hostname(), (error, serverAddress) => {
+  if (error) {
+    console.error(error);
+    return;
+  }
+  server.listen(PORT, () => {
+    console.log(`Server running at http://${serverAddress}:${PORT}`);
+  });
 });

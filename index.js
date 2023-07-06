@@ -1,4 +1,3 @@
-import { IMAGE_SRC_URL } from "./src/api/http.js";
 import {
   initializeStateEmitter,
   setClientState,
@@ -341,17 +340,17 @@ const INITIAL_STATE = {
 const state = {
   client: {
     caption: { top: "boi", bottom: "you know i had to do it to em" },
-    name: "other",
+    name: "",
     isHost: false,
-    preview: IMAGE_SRC_URL,
+    preview: "http://192.168.1.66:8000/image",
   },
   server: {
     author: "other",
     canVote: true,
     captions: [
-      { author: "other", top: "helo", bottom: "boi" },
-      { author: "other", top: "helo", bottom: "boi" },
-      { author: "other", top: "helo", bottom: "boi" },
+      { author: "rogowski", top: "helo", bottom: "boi" },
+      // { author: "other", top: "helo", bottom: "boi" },
+      // { author: "other", top: "helo", bottom: "boi" },
     ],
     index: 1,
     names: ["other", "rogowski"],

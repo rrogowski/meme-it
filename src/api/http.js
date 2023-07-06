@@ -1,6 +1,4 @@
-const SERVER_IP = "http://192.168.1.66:8000";
-
-export const IMAGE_SRC_URL = SERVER_IP.concat("/image");
+const SERVER_HREF = `http://${window.location.hostname}:8000`;
 
 export const uploadImage = (file) => {
   return post("/upload", file);
@@ -19,5 +17,5 @@ export const nextCaption = (index) => {
 };
 
 const post = (url, body) => {
-  return fetch(SERVER_IP.concat(url), { body, method: "POST" });
+  return fetch(SERVER_HREF.concat(url), { body, method: "POST" });
 };

@@ -1,14 +1,21 @@
-import { readFileAsDataURL } from "../api/file.js";
-import { IMAGE_SRC_URL, postCaption } from "../api/http.js";
+import { postCaption } from "../api/http.js";
 import { setClientState } from "../lib/state.js";
-import { button, div, img, input, p } from "../lib/ui.js";
+import { button, div, input, p } from "../lib/ui.js";
 import { Meme } from "./meme.js";
 
 export const CaptionImage = ({ client, server }) => {
   const { caption, isHost, name } = client;
   const { captions, names, src, uploader } = server;
 
-  if (isHost || name === uploader || hasSubmittedCaption(captions, name)) {
+  if (name === uploader) {
+    return div(
+      { className: "caption-image" },
+      p(`Received ${captions.length} caption(s)`),
+      button("Show Me Memes", { disabled: captions.length < 2 })
+    );
+  }
+
+  if (isHost || hasSubmittedCaption(captions, name)) {
     const namesPendingCaption = names.filter((n) => n !== uploader);
 
     return div(p(`Waiting on caption from:`), ...namesPendingCaption.map(p));

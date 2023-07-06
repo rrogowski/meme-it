@@ -1,8 +1,11 @@
 import { setServerState } from "../lib/state.js";
 
+const SERVER_HREF = `ws://${window.location.hostname}:8000`;
+
 export const createWebSocketConnection = ({ isHost, name }) => {
   const searchParams = new URLSearchParams({ isHost, name });
-  const socket = new WebSocket(`ws://localhost:8000/?${searchParams}`);
+  const webSocketUrl = SERVER_HREF.concat(`/${searchParams}`);
+  const socket = new WebSocket(webSocketUrl);
   let body = "";
   socket.addEventListener("message", ({ data }) => {
     let updates;
