@@ -1,4 +1,4 @@
-import { postCaption } from "../api/http.js";
+import { postCaption, revealMemes } from "../api/http.js";
 import { setClientState } from "../lib/state.js";
 import { button, div, input, p } from "../lib/ui.js";
 import { Meme } from "./meme.js";
@@ -14,7 +14,10 @@ export const CaptionImage = ({ client, server }) => {
       { className: "caption-image" },
       p(`Received ${captions.length} caption(s)`),
       name === uploader
-        ? button("Reveal Memes", { disabled: namesPendingCaption.length > 0 })
+        ? button("Reveal Memes", {
+            disabled: namesPendingCaption.length > 0,
+            onclick: revealMemes,
+          })
         : null,
       namesPendingCaption.length > 0
         ? div(p("Waiting on:", ...namesPendingCaption.map(p)))

@@ -1,13 +1,12 @@
-import { nextCaption, previousCaption } from "../api/http.js";
-import { button, div, img, p } from "../lib/ui.js";
+import { nextCaption, previousCaption, startNewRound } from "../api/http.js";
+import { button, div } from "../lib/ui.js";
 import { Meme } from "./meme.js";
 
 export const RevealMemes = ({ client, server }) => {
-  const { isHost, name } = client;
+  const { name } = client;
   const { captions, index, src, uploader } = server;
 
   const hasUnviewedMeme = !wasEveryMemeViewed(captions);
-  console.log("hasUnviewedMeme?", hasUnviewedMeme);
 
   const caption = captions[index];
 
@@ -22,12 +21,12 @@ export const RevealMemes = ({ client, server }) => {
   return div(
     { className: "reveal-memes" },
     name === uploader
-      ? button("Start New Round", { disabled: hasUnviewedMeme })
+      ? button("Start New Round", {
+          disabled: hasUnviewedMeme,
+          onclick: startNewRound,
+        })
       : null,
-    div(
-      { className: "preview" },
-      Meme({ src, topText: caption.top, bottomText: caption.bottom })
-    ),
+    div({ className: "preview" }, Meme({ src, ...caption })),
     name === uploader
       ? div(
           { style: "display: flex;" },

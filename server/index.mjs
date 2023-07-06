@@ -47,12 +47,10 @@ const updateGameState = (action) => {
   console.log();
   webSocketConnections.forEach((socket) => {
     // console.log(`text frame is ${JSON.stringify(gameState).length} bytes`);
-    const frame = JSON.stringify(gameState);
-    if (frame.length > 125) {
+    let frame = JSON.stringify(gameState);
+    while (frame.length > 0) {
       sendTextFrame(socket, frame.slice(0, 125));
-      sendTextFrame(socket, frame.slice(125));
-    } else {
-      sendTextFrame(socket, frame);
+      frame = frame.slice(125);
     }
   });
 };
@@ -80,10 +78,11 @@ const sendTextFrame = function (socket, text) {
 const applyPartialReducer = (state, action) => {
   switch (action.type) {
     case "IMAGE_UPLOADED":
+      imageNumber++;
       return {
         phase: "CAPTION_IMAGE",
         captions: [],
-        src: `http://${serverAddress}:${PORT}/image`,
+        src: `http://${serverAddress}:${PORT}/image/${imageNumber}`,
       };
     case "PLAYER_CONNECTED":
       return {
@@ -98,9 +97,24 @@ const applyPartialReducer = (state, action) => {
       };
     case "CAPTION_SUBMITTED":
       return { captions: state.captions.concat(action.payload) };
+    case "REVEAL_MEMES":
+      shuffleArray(state.captions);
+      return {
+        captions: [
+          { ...state.captions[0], wasViewed: true },
+          ...state.captions.slice(1),
+        ],
+        index: 0,
+        phase: "REVEAL_MEMES",
+      };
     case "NEXT_CAPTION":
       return {
         index: state.index + 1,
+        captions: [
+          ...state.captions.slice(0, state.index + 1),
+          { ...state.captions[state.index + 1], wasViewed: true },
+          ...state.captions.slice(state.index + 2),
+        ],
       };
     case "PREVIOUS_CAPTION":
       return {
@@ -115,6 +129,13 @@ const applyPartialReducer = (state, action) => {
     case "ROUND_RESET":
       const names = state.names.slice(1).concat(state.names[0]);
       return { ...INITIAL_STATE, names, uploader: names[0] };
+  }
+};
+
+const shuffleArray = (array) => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
   }
 };
 
@@ -162,6 +183,7 @@ const generateWebsocketAcceptKey = (request) => {
 };
 
 let image = null;
+let imageNumber = 0;
 
 const server = createServer((request, response) => {
   switch (request.url) {
@@ -177,7 +199,7 @@ const server = createServer((request, response) => {
         response.end();
       });
       break;
-    case "/image":
+    case `/image/${imageNumber}`:
       console.log("image requested");
       response.setHeader("Access-Control-Allow-Origin", "*");
       response.setHeader("Content-Type", "image/png");
@@ -213,6 +235,11 @@ const server = createServer((request, response) => {
     case "/decide":
       response.setHeader("Access-Control-Allow-Origin", "*");
       updateGameState({ type: "WINNER_SELECTED" });
+      response.end();
+      break;
+    case "/reveal":
+      response.setHeader("Access-Control-Allow-Origin", "*");
+      updateGameState({ type: "REVEAL_MEMES" });
       response.end();
       break;
     case "/reset":

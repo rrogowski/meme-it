@@ -16,6 +16,14 @@ export const nextCaption = (index) => {
   return post("/next", index);
 };
 
+export const revealMemes = () => {
+  return post("/reveal");
+};
+
+export const startNewRound = () => {
+  return post("/reset");
+};
+
 const post = (url, body) => {
   return fetch(SERVER_HREF.concat(url), { body, method: "POST" });
 };

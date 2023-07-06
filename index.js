@@ -16,7 +16,7 @@ const getView = (phase) => {
       return SelectImage;
     case "CAPTION_IMAGE":
       return CaptionImage;
-    case "SELECT_WINNER":
+    case "REVEAL_MEMES":
       return RevealMemes;
     default:
       return MainMenu;
