@@ -1,9 +1,9 @@
 import { nextCaption, previousCaption } from "../api/http.js";
-import { button, div, img, input, p } from "../lib/ui.js";
+import { button, div, img, p } from "../lib/ui.js";
 
 export const SelectWinner = ({ client, server }) => {
-  const { didConfirm, isHost, name } = client;
-  const { canVote, captions, index, src, uploader } = server;
+  const { isHost, name } = client;
+  const { captions, index, src, uploader } = server;
 
   const caption = captions[index];
   if (isHost) {
@@ -23,16 +23,10 @@ export const SelectWinner = ({ client, server }) => {
   };
 
   return div(
-    img({ src: IMAGE_SRC_URL }),
-    p(caption.top),
-    p(caption.bottom),
     button("Back", { disabled: index === 0, onclick: goBack }),
-    button("Next", { disabled: index === captions.length - 1, onclick: next }),
-    canVote
-      ? div(
-          input({ type: "checkbox", value: didConfirm }),
-          p("Certified Dank Meme")
-        )
-      : null
+    button("Next", { disabled: index === captions.length - 1, onclick: next })
+    // img({ src })
+    // p(caption.top),
+    // p(caption.bottom),
   );
 };
