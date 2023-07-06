@@ -3,7 +3,7 @@ import { render } from "./src/lib/ui.js";
 import { CaptionImage } from "./src/views/caption-image.js";
 import { MainMenu } from "./src/views/main-menu.js";
 import { SelectImage } from "./src/views/select-image.js";
-import { SelectWinner } from "./src/views/select-winner.js";
+import { RevealMemes } from "./src/views/reveal-memes.js";
 
 const App = (state) => {
   const View = getView(state.server.phase);
@@ -17,7 +17,7 @@ const getView = (phase) => {
     case "CAPTION_IMAGE":
       return CaptionImage;
     case "SELECT_WINNER":
-      return SelectWinner;
+      return RevealMemes;
     default:
       return MainMenu;
   }
@@ -33,18 +33,17 @@ const state = {
   client: {
     caption: { top: "boi", bottom: "you know i had to do it to em" },
     name: "other",
-    isHost: false,
+    isHost: true,
     preview: "http://192.168.1.66:8000/image",
   },
   server: {
-    author: "other",
     canVote: true,
     captions: [
-      // { author: "rogowski", top: "helo", bottom: "boi" },
+      { author: "rogowski", top: "helo", bottom: "boi", wasViewed: true },
       // { author: "other", top: "helo", bottom: "boi" },
       // { author: "other", top: "helo", bottom: "boi" },
     ],
-    index: 1,
+    index: 0,
     names: ["other", "rogowski"],
     phase: "SELECT_IMAGE",
     src: "http://192.168.1.66:8000/image",
@@ -55,6 +54,6 @@ const state = {
 initializeStateEmitter(state, (state) => {
   console.log(state.client, state.server);
   render(() => {
-    return SelectWinner(state);
+    return RevealMemes(state);
   });
 });

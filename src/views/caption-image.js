@@ -7,18 +7,19 @@ export const CaptionImage = ({ client, server }) => {
   const { caption, isHost, name } = client;
   const { captions, names, src, uploader } = server;
 
-  if (name === uploader) {
+  const namesPendingCaption = getNamesPendingCaption(captions, names, uploader);
+
+  if (isHost || name === uploader || hasSubmittedCaption(captions, name)) {
     return div(
       { className: "caption-image" },
       p(`Received ${captions.length} caption(s)`),
-      button("Show Me Memes", { disabled: captions.length < 2 })
+      name === uploader
+        ? button("Reveal Memes", { disabled: namesPendingCaption.length > 0 })
+        : null,
+      namesPendingCaption.length > 0
+        ? div(p("Waiting on:", ...namesPendingCaption.map(p)))
+        : div(p(`Waiting on ${uploader} to reveal memes`))
     );
-  }
-
-  if (isHost || hasSubmittedCaption(captions, name)) {
-    const namesPendingCaption = names.filter((n) => n !== uploader);
-
-    return div(p(`Waiting on caption from:`), ...namesPendingCaption.map(p));
   }
 
   const setTopText = (event) => {
@@ -48,6 +49,12 @@ export const CaptionImage = ({ client, server }) => {
     }),
     button("Submit", { onclick: submitCaption })
   );
+};
+
+const getNamesPendingCaption = (captions, names, uploader) => {
+  return names
+    .filter((name) => name !== uploader)
+    .filter((name) => !captions.find(({ author }) => author === name));
 };
 
 const hasSubmittedCaption = (captions, name) => {

@@ -1,18 +1,12 @@
-.caption-image {
+.reveal-memes {
   display: flex;
   height: 100vh;
   flex-direction: column;
   padding: 1rem;
   padding-bottom: 0;
-  text-align: center;
 }
 
-.caption-image input,
-.caption-image button {
-  flex-shrink: 0;
-}
-
-.caption-image .preview {
+.reveal-memes .preview {
   flex-grow: 1;
   margin-bottom: 1rem;
   overflow: hidden;

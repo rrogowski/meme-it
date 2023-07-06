@@ -9,7 +9,11 @@ export const SelectImage = ({ client, server }) => {
   const { uploader } = server;
 
   if (isHost || name !== uploader) {
-    return `Waiting for ${uploader} to upload an image`;
+    return div(
+      { className: "select-image" },
+      p("Waiting on upload from:"),
+      p(uploader)
+    );
   }
 
   const { fileInput, openFileDialog } = createFileInput();
@@ -20,7 +24,7 @@ export const SelectImage = ({ client, server }) => {
     fileInput,
     button("Choose File", { onclick: openFileDialog }),
     div({ className: "preview" }, preview ? Meme({ src: preview }) : null),
-    button("Submit Image", { disabled: !preview, onclick: submitImage })
+    button("Upload Image", { disabled: !preview, onclick: submitImage })
   );
 };
 
