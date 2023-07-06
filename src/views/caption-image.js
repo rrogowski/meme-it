@@ -19,9 +19,11 @@ export const CaptionImage = ({ client, server }) => {
             onclick: revealMemes,
           })
         : null,
-      namesPendingCaption.length > 0
-        ? div(p("Waiting on:", ...namesPendingCaption.map(p)))
-        : div(p(`Waiting on ${uploader} to reveal memes`))
+      name !== uploader
+        ? namesPendingCaption.length > 0
+          ? div(p("Waiting on:", ...namesPendingCaption.map(p)))
+          : div(p(`Waiting on ${uploader} to reveal memes`))
+        : null
     );
   }
 
