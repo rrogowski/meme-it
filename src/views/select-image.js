@@ -1,7 +1,7 @@
 import { readFileAsArrayBuffer, readFileAsDataURL } from "../api/file.js";
 import { uploadImage } from "../api/http.js";
 import { setClientState } from "../lib/state.js";
-import { button, div, img, input, p } from "../lib/ui.js";
+import { button, div, input, p } from "../lib/ui.js";
 import { Meme } from "./meme.js";
 
 export const SelectImage = ({ client, server }) => {

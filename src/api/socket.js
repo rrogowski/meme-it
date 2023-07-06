@@ -1,4 +1,4 @@
-import { setServerState } from "../lib/state.js";
+import { setClientState, setServerState } from "../lib/state.js";
 
 const SERVER_HREF = `ws://${window.location.hostname}:8000`;
 
@@ -17,6 +17,14 @@ export const createWebSocketConnection = ({ isHost, name }) => {
     }
     if (updates) {
       setServerState(updates);
+      if (updates.phase === "REVEAL_MEMES") {
+        setClientState({
+          bottomText: null,
+          file: null,
+          preview: null,
+          topText: null,
+        });
+      }
     }
   });
   socket.addEventListener("close", () => {
