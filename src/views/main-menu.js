@@ -1,24 +1,13 @@
-import { createWebSocketConnection } from "../api/socket.js";
-import { setClientState } from "../lib/state.js";
 import { button, div, input } from "../lib/ui.js";
 
-export const MainMenu = ({ client }) => {
-  const { name } = client;
-  const joinAsHost = () => joinGame({ isHost: true });
-  const joinAsPlayer = () => joinGame({ isHost: false, name });
+export const MainMenu = ({ client, server }) => {
+  const { name = "" } = client.state;
+  const { setName } = client.actions;
+  const { connect } = server.actions;
   return div(
     { className: "main-menu" },
     input({ key: "name", oninput: setName, placeholder: "name", value: name }),
-    button("Join as Player", { disabled: !name, onclick: joinAsPlayer }),
-    button("Join as Host", { disabled: name, onclick: joinAsHost })
+    button("Join as Player", { disabled: !name, onclick: connect }),
+    button("Join as Host", { disabled: name, onclick: connect })
   );
-};
-
-const joinGame = ({ isHost, name }) => {
-  setClientState({ isHost });
-  createWebSocketConnection({ isHost, name });
-};
-
-const setName = (event) => {
-  setClientState({ name: event.target.value });
 };

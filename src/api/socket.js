@@ -1,33 +1,31 @@
-import { setClientState, setServerState } from "../lib/state.js";
+const WEB_SOCKET_URL = `ws://${window.location.hostname}:8000`;
 
-const SERVER_HREF = `ws://${window.location.hostname}:8000`;
-
-export const createWebSocketConnection = ({ isHost, name }) => {
+export const createWebSocketConnection = ({ isHost, name, onData }) => {
   const searchParams = new URLSearchParams({ isHost, name });
-  const webSocketUrl = SERVER_HREF.concat(`/connect?${searchParams}`);
-  const socket = new WebSocket(webSocketUrl);
-  let body = "";
-  socket.addEventListener("message", ({ data }) => {
-    let updates;
-    try {
-      updates = JSON.parse(body.concat(data));
-      body = "";
-    } catch {
-      body += data;
-    }
-    if (updates) {
-      setServerState(updates);
-      if (updates.phase === "REVEAL_MEMES") {
-        setClientState({
-          bottomText: null,
-          file: null,
-          preview: null,
-          topText: null,
-        });
-      }
-    }
+  const url = `${WEB_SOCKET_URL}/?${searchParams}`;
+  const socket = new WebSocket(url);
+  socket.addEventListener("message", ({ data: frame }) => {
+    parseNextTextFrame(frame, onData);
   });
   socket.addEventListener("close", () => {
-    setServerState({ phase: null });
+    onData({ phase: null });
   });
+};
+
+let body = "";
+const parseNextTextFrame = (frame, onData) => {
+  body += frame;
+  const data = tryJsonParse(body);
+  if (data) {
+    body = "";
+    onData(data);
+  }
+};
+
+const tryJsonParse = (body) => {
+  try {
+    return JSON.parse(body);
+  } catch {
+    return null;
+  }
 };

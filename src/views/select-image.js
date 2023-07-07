@@ -5,10 +5,10 @@ import { button, div, input, p } from "../lib/ui.js";
 import { Meme } from "./meme.js";
 
 export const SelectImage = ({ client, server }) => {
-  const { file, isHost, name, preview } = client;
+  const { file, isUploader, preview } = client.state;
   const { uploader } = server;
 
-  if (isHost || name !== uploader) {
+  if (!isUploader) {
     return div(
       { className: "select-image" },
       p("Waiting on upload from:"),
