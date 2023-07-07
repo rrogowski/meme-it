@@ -6,20 +6,15 @@ import { SelectImage } from "./src/views/select-image.js";
 import { RevealMemes } from "./src/views/reveal-memes.js";
 
 const App = (state) => {
-  const View = getView(state.server.phase);
-  return View(state);
-};
-
-const getView = (phase) => {
-  switch (phase) {
+  switch (state.server.phase) {
     case "SELECT_IMAGE":
-      return SelectImage;
+      return SelectImage(state);
     case "CAPTION_IMAGE":
-      return CaptionImage;
+      return CaptionImage(state);
     case "REVEAL_MEMES":
-      return RevealMemes;
+      return RevealMemes(state);
     default:
-      return MainMenu;
+      return MainMenu(state);
   }
 };
 
