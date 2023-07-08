@@ -1,7 +1,7 @@
 const SERVER_HREF = `http://${window.location.hostname}:8000`;
 
-export const uploadImage = (file) => {
-  return post("/upload", file);
+export const uploadImage = (arrayBuffer) => {
+  return post("/upload", arrayBuffer);
 };
 
 export const postCaption = (caption) => {

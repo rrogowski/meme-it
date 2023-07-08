@@ -1,3 +1,5 @@
+import { getArrayBufferFromDataURL, readFileAsDataURL } from "../api/file.js";
+import { uploadImage } from "../api/http.js";
 import { createWebSocketConnection } from "../api/socket.js";
 import { createState } from "../lib/state.js";
 
@@ -14,8 +16,24 @@ Object.assign(client.state, {
 });
 
 client.actions = {
+  openFileDialog() {
+    const fileInput = document.querySelector("input[type=file]");
+    const event = new MouseEvent("click");
+    fileInput.dispatchEvent(event);
+  },
+  setPreview(event) {
+    const file = event.target.files[0];
+    readFileAsDataURL(file, (result) => {
+      client.setState({ preview: result });
+    });
+  },
   setName(event) {
     client.setState({ name: event.target.value });
+  },
+  submitImage() {
+    getArrayBufferFromDataURL(client.state.preview, (result) => {
+      uploadImage(result);
+    });
   },
 };
 
