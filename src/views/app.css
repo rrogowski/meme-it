@@ -1,19 +1,15 @@
 * {
   box-sizing: border-box;
   font-size: inherit;
+  margin: 0;
 }
 
 body {
   font-size: 2rem;
-  margin: 0;
 }
 
 button,
-input {
-  margin-bottom: 1rem;
-}
-
+input,
 p {
-  margin: 0;
   margin-bottom: 1rem;
 }
