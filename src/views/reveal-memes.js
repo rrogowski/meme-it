@@ -1,4 +1,3 @@
-import { startNewRound } from "../api/http.js";
 import { button, div } from "../lib/ui.js";
 import { Meme } from "./meme.js";
 
@@ -9,12 +8,12 @@ export const RevealMemes = ({ server }) => {
 
 const AllMemes = ({ server }) => {
   const { caption, hasNext, hasPrevious, src, unviewedCaptions } = server.state;
-  const { getNextCaption, getPreviousCaption } = server.actions;
+  const { decideWinner, getNextCaption, getPreviousCaption } = server.actions;
   return div(
     { className: "reveal-memes" },
     button("Winner", {
       disabled: unviewedCaptions.length > 0,
-      onclick: startNewRound,
+      onclick: decideWinner,
     }),
     div({ className: "preview" }, Meme({ caption, src })),
     div(

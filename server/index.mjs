@@ -242,7 +242,7 @@ const server = createServer((request, response) => {
       updateGameState({ type: "REVEAL_MEMES" });
       response.end();
       break;
-    case "/reset":
+    case "/winner":
       response.setHeader("Access-Control-Allow-Origin", "*");
       updateGameState({ type: "ROUND_RESET" });
       response.end();

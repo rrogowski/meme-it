@@ -52,6 +52,9 @@ server.actions = {
       onData: server.setState,
     });
   },
+  decideWinner() {
+    post("/winner");
+  },
   getNextCaption() {
     post("/next");
   },
