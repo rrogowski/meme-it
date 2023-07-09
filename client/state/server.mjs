@@ -1,5 +1,5 @@
-import { post } from "../api/http.js";
-import { createWebSocketConnection } from "../api/socket.js";
+import { post } from "../http.js";
+import { createWebSocketConnection } from "../web-socket.js";
 import { getArrayBufferFromDataURL } from "../lib/file.js";
 import { createState } from "../lib/state.js";
 import { client } from "./client.mjs";
