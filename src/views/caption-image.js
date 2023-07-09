@@ -1,68 +1,58 @@
-import { postCaption, revealMemes } from "../api/http.js";
-import { setClientState } from "../lib/state.js";
 import { button, div, input, p } from "../lib/ui.js";
 import { Meme } from "./meme.js";
 
 export const CaptionImage = ({ client, server }) => {
-  const { bottomText, isHost, name, topText } = client;
-  const { captions, names, src, uploader } = server;
+  const { canCaption } = server.state;
+  return canCaption ? EnterCaption({ client, server }) : Waiting({ server });
+};
 
-  const namesPendingCaption = getNamesPendingCaption(captions, names, uploader);
-
-  if (isHost || name === uploader || hasSubmittedCaption(captions, name)) {
-    return div(
-      { className: "caption-image" },
-      p(`Received ${captions.length} caption(s)`),
-      name === uploader
-        ? button("Reveal Memes", {
-            disabled: namesPendingCaption.length > 0,
-            onclick: revealMemes,
-          })
-        : null,
-      name !== uploader
-        ? namesPendingCaption.length > 0
-          ? div(p("Waiting on:", ...namesPendingCaption.map(p)))
-          : div(p(`Waiting on ${uploader} to reveal memes`))
-        : null
-    );
-  }
-
-  const setTopText = (event) => {
-    setClientState({ topText: event.target.value });
-  };
-  const setBottomText = (event) => {
-    setClientState({ bottomText: event.target.value });
-  };
-  const submitCaption = () =>
-    postCaption({ author: name, bottomText, topText });
+const EnterCaption = ({ client, server }) => {
+  const { caption = {} } = client.state;
+  const { setBottomText, setTopText } = client.actions;
+  const { src } = server.state;
+  const { uploadCaption } = server.actions;
   return div(
     { className: "caption-image" },
-    div({ className: "preview" }, Meme({ bottomText, src, topText })),
+    div({ className: "preview" }, Meme({ caption, src })),
     input({
       key: "top-text",
       oninput: setTopText,
       placeholder: "Top Text",
-      value: topText,
+      value: caption.topText ?? "",
     }),
     input({
       key: "bottom-text",
       oninput: setBottomText,
       placeholder: "Bottom Text",
-      value: bottomText,
+      value: caption.bottomText ?? "",
     }),
     button("Submit", {
-      disabled: !bottomText && !topText,
-      onclick: submitCaption,
+      disabled: !caption.topText && !caption.bottomText,
+      onclick: uploadCaption,
     })
   );
 };
 
-const getNamesPendingCaption = (captions, names, uploader) => {
-  return names
-    .filter((name) => name !== uploader)
-    .filter((name) => !captions.find(({ author }) => author === name));
+const Waiting = ({ server }) => {
+  const { pendingCaptioners } = server.state;
+  return pendingCaptioners.length > 0
+    ? WaitingForCaptions({ server })
+    : WaitingForUploader({ server });
 };
 
-const hasSubmittedCaption = (captions, name) => {
-  return captions.find(({ author }) => author === name);
+const WaitingForCaptions = ({ server }) => {
+  const { pendingCaptioners } = server.state;
+  return div(
+    { className: "caption-image" },
+    p("Waiting for all players to caption:"),
+    ...pendingCaptioners.map(p)
+  );
+};
+
+const WaitingForUploader = ({ server }) => {
+  const { uploader } = server.state;
+  return div(
+    { className: "caption-image" },
+    p(`Waiting for ${uploader} to reveal memes`)
+  );
 };

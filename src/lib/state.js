@@ -22,8 +22,8 @@ const setState = (updates) => {
   onStateChangeCallback?.({ client, server });
 };
 
-export const createState = () => {
-  const state = {};
+export const createState = (initialState) => {
+  const state = initialState;
   // let onStateChangeCallback = null;
   return {
     state,

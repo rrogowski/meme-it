@@ -1,9 +1,5 @@
 const SERVER_HREF = `http://${window.location.hostname}:8000`;
 
-export const uploadImage = (arrayBuffer) => {
-  return post("/upload", arrayBuffer);
-};
-
 export const postCaption = (caption) => {
   return post("/caption", JSON.stringify(caption));
 };
@@ -24,6 +20,6 @@ export const startNewRound = () => {
   return post("/reset");
 };
 
-const post = (url, body) => {
+export const post = (url, body) => {
   return fetch(SERVER_HREF.concat(url), { body, method: "POST" });
 };

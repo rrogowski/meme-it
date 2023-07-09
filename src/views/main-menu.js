@@ -1,7 +1,7 @@
 import { button, div, input } from "../lib/ui.js";
 
 export const MainMenu = ({ client, server }) => {
-  const { name = "" } = client.state;
+  const { name } = client.state;
   const { setName } = client.actions;
   const { connect } = server.actions;
   return div(
