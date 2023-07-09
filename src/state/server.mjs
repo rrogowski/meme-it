@@ -36,7 +36,7 @@ export const server = createState({
   get isUploader() {
     const { name } = client.state;
     const { uploader } = server.state;
-    return name !== uploader;
+    return name === uploader;
   },
   get unviewedCaptions() {
     const { captions } = server.state;

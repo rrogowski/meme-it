@@ -12,7 +12,7 @@ const AllMemes = ({ server }) => {
   const { getNextCaption, getPreviousCaption } = server.actions;
   return div(
     { className: "reveal-memes" },
-    button("Start New Round", {
+    button("Winner", {
       disabled: unviewedCaptions.length > 0,
       onclick: startNewRound,
     }),
