@@ -1,6 +1,5 @@
 import { createHash } from "crypto";
 import { lookup } from "dns";
-import { readFileSync } from "fs";
 import { createServer } from "http";
 import { hostname } from "os";
 import { URL } from "url";
@@ -30,8 +29,8 @@ const acceptWebSocketUpgrade = (request, socket) => {
 const webSocketConnections = [];
 
 const INITIAL_STATE = {
-  index: null,
   captions: [],
+  index: null,
   names: [],
   phase: "SELECT_IMAGE",
   winner: null,
@@ -200,7 +199,6 @@ const server = createServer((request, response) => {
       });
       break;
     case `/image/${imageNumber}`:
-      console.log("image requested");
       response.setHeader("Access-Control-Allow-Origin", "*");
       response.setHeader("Content-Type", "image/png");
       response.write(image);
@@ -222,19 +220,14 @@ const server = createServer((request, response) => {
       });
       break;
     }
-    case "/previous":
-      response.setHeader("Access-Control-Allow-Origin", "*");
-      updateGameState({ type: "PREVIOUS_CAPTION" });
-      response.end();
-      break;
     case "/next":
       response.setHeader("Access-Control-Allow-Origin", "*");
       updateGameState({ type: "NEXT_CAPTION" });
       response.end();
       break;
-    case "/decide":
+    case "/prev":
       response.setHeader("Access-Control-Allow-Origin", "*");
-      updateGameState({ type: "WINNER_SELECTED" });
+      updateGameState({ type: "PREVIOUS_CAPTION" });
       response.end();
       break;
     case "/reveal":

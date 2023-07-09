@@ -1,15 +1,16 @@
-import { CaptionImage } from "./caption-image.js";
-import { MainMenu } from "./main-menu.js";
-import { RevealMemes } from "./reveal-memes.js";
-import { SelectImage } from "./select-image.js";
+import { CaptionImage } from "./caption-image.mjs";
+import { MainMenu } from "./main-menu.mjs";
+import { RevealMemes } from "./reveal-memes.mjs";
+import { SelectImage } from "./select-image.mjs";
 
-export const App = ({ client, server }) => {
-  const { phase } = server.state;
-  const View = getView(phase);
-  return View({ client, server });
+export const App = ({ actions, state }) => {
+  console.log(state.preview);
+  const View = getView(state);
+  return View({ actions, state });
 };
 
-const getView = (phase) => {
+const getView = (state) => {
+  const { phase } = state;
   switch (phase) {
     case "SELECT_IMAGE":
       return SelectImage;

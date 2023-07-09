@@ -1,8 +1,4 @@
-const WEB_SOCKET_URL = `ws://${window.location.hostname}:8000`;
-
-export const createWebSocketConnection = ({ isHost, name, onData }) => {
-  const searchParams = new URLSearchParams({ isHost, name });
-  const url = `${WEB_SOCKET_URL}/?${searchParams}`;
+export const createWebSocketConnection = ({ url, onData }) => {
   const socket = new WebSocket(url);
   socket.addEventListener("message", ({ data: frame }) => {
     parseNextTextFrame(frame, onData);

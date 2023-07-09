@@ -1,8 +1,10 @@
-import { onStateChange } from "./client/lib/state.js";
-import { render } from "./client/lib/ui.js";
-import { client } from "./client/state/client.mjs";
-import { server } from "./client/state/server.mjs";
+import { createActions } from "./client/app/actions.mjs";
+import { createState } from "./client/app/state.mjs";
+import { createStateManager } from "./client/lib/state-manager.mjs";
+import { render } from "./client/lib/ui.mjs";
 import { App } from "./client/views/app.mjs";
 
-const renderApp = () => render(App.bind(null, { client, server }));
-onStateChange(renderApp);
+const state = createState();
+const { onStateChange, setState } = createStateManager(state);
+const actions = createActions({ state, setState });
+onStateChange(() => render(App, { actions, state }));

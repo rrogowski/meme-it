@@ -9,7 +9,8 @@ const createNativeComponent = (tagName) => {
     }
 
     const modifiedAttributes = getModifiedAttributes(element, attributes);
-    Object.assign(element, modifiedAttributes);
+    const sanitizedAttributes = getSanitizedAttributes(modifiedAttributes);
+    Object.assign(element, sanitizedAttributes);
 
     const children = args.filter(isValidNode);
     element.replaceChildren(...children);
@@ -27,6 +28,15 @@ const getModifiedAttributes = (element, attributes) => {
   return Object.fromEntries(modifiedEntries);
 };
 
+// Some element types (e.g. `input`) don't handle `undefined` very well.
+const getSanitizedAttributes = (attributes) => {
+  const entries = Object.entries(attributes);
+  const modifiedEntries = entries.map(([name, value]) => {
+    return value === undefined ? [name, null] : [name, value];
+  });
+  return Object.fromEntries(modifiedEntries);
+};
+
 const isValidNode = (arg) => {
   return typeof arg === "string" || arg instanceof HTMLElement;
 };
@@ -35,9 +45,9 @@ const isAttributes = (arg) => {
   return typeof arg === "object" && !isValidNode(arg);
 };
 
-export const render = (Component) => {
+export const render = (Component, ...args) => {
   const { activeElement } = document;
-  const node = Component();
+  const node = Component(...args);
   document.body.replaceChildren(node);
   activeElement.focus();
 };
