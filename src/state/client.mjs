@@ -5,7 +5,12 @@ export const client = createState({
   caption: { bottomText: "", topText: "" },
   name: "",
   get isHost() {
-    return !client.state.name;
+    const { name } = client.state;
+    return !name;
+  },
+  get isValidCaption() {
+    const { caption } = client.state;
+    return caption.bottomText || caption.topText;
   },
 });
 

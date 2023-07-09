@@ -7,7 +7,7 @@ export const MainMenu = ({ client, server }) => {
   return div(
     { className: "main-menu" },
     input({ key: "name", oninput: setName, placeholder: "name", value: name }),
-    button("Join as Player", { disabled: !name, onclick: connect }),
-    button("Join as Host", { disabled: name, onclick: connect })
+    button({ disabled: !name, onclick: connect }, "Join as Player"),
+    button({ disabled: name, onclick: connect }, "Join as Host")
   );
 };

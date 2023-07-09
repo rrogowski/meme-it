@@ -11,6 +11,10 @@ export const server = createState({
     const didCaption = captioners.includes(name);
     return !isHost && !isUploader && !didCaption;
   },
+  get canDecideWinner() {
+    const { unviewedCaptions } = server.state;
+    return unviewedCaptions.length === 0;
+  },
   get caption() {
     const { captions, index } = server.state;
     return captions[index];
@@ -26,6 +30,10 @@ export const server = createState({
   get hasPrevious() {
     const { index } = server.state;
     return index > 0;
+  },
+  get isWaitingForCaptions() {
+    const { pendingCaptioners } = server.state;
+    return pendingCaptioners.length > 0;
   },
   get pendingCaptioners() {
     const { captioners, names, uploader } = server.state;

@@ -7,7 +7,7 @@ export const CaptionImage = ({ client, server }) => {
 };
 
 const EnterCaption = ({ client, server }) => {
-  const { caption = {} } = client.state;
+  const { caption, isValidCaption } = client.state;
   const { setBottomText, setTopText } = client.actions;
   const { src } = server.state;
   const { uploadCaption } = server.actions;
@@ -18,24 +18,21 @@ const EnterCaption = ({ client, server }) => {
       key: "top-text",
       oninput: setTopText,
       placeholder: "Top Text",
-      value: caption.topText ?? "",
+      value: caption.topText,
     }),
     input({
       key: "bottom-text",
       oninput: setBottomText,
       placeholder: "Bottom Text",
-      value: caption.bottomText ?? "",
+      value: caption.bottomText,
     }),
-    button("Submit", {
-      disabled: !caption.topText && !caption.bottomText,
-      onclick: uploadCaption,
-    })
+    button({ disabled: !isValidCaption, onclick: uploadCaption }, "Upload")
   );
 };
 
 const Waiting = ({ server }) => {
-  const { pendingCaptioners } = server.state;
-  return pendingCaptioners.length > 0
+  const { isWaitingForCaptions } = server.state;
+  return isWaitingForCaptions
     ? WaitingForCaptions({ server })
     : WaitingForUploader({ server });
 };
@@ -44,7 +41,7 @@ const WaitingForCaptions = ({ server }) => {
   const { pendingCaptioners } = server.state;
   return div(
     { className: "caption-image" },
-    p("Waiting for all players to caption:"),
+    p("Waiting for captions from:"),
     ...pendingCaptioners.map(p)
   );
 };

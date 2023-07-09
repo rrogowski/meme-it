@@ -6,8 +6,16 @@
   padding-bottom: 0;
 }
 
-.reveal-memes .preview {
+.reveal-memes .meme {
   flex-grow: 1;
   margin-bottom: 1rem;
   overflow: hidden;
+}
+
+.reveal-memes .navigation-controls {
+  display: flex;
+}
+
+.reveal-memes .navigation-controls button {
+  flex-grow: 1;
 }

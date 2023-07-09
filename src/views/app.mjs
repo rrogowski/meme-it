@@ -4,7 +4,8 @@ import { RevealMemes } from "./reveal-memes.js";
 import { SelectImage } from "./select-image.js";
 
 export const App = ({ client, server }) => {
-  const View = getView(server.state.phase);
+  const { phase } = server.state;
+  const View = getView(phase);
   return View({ client, server });
 };
 

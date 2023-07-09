@@ -15,9 +15,9 @@ const UploadImage = ({ client, server }) => {
   return div(
     { className: "select-image" },
     input({ accept: "image/*", onchange: setPreview, type: "file" }),
-    button("Choose File", { onclick: openFileDialog }),
+    button({ onclick: openFileDialog }, "Choose File"),
     div({ className: "preview" }, preview ? Meme({ src: preview }) : null),
-    button("Upload Image", { disabled: !preview, onclick: uploadImage })
+    button({ disabled: !preview, onclick: uploadImage }, "Upload Image")
   );
 };
 
@@ -25,7 +25,6 @@ const WaitingForUpload = ({ server }) => {
   const { uploader } = server.state;
   return div(
     { className: "select-image" },
-    p("Waiting on upload from:"),
-    p(uploader)
+    p(`"Waiting for ${uploader} to upload image`)
   );
 };

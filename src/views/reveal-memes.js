@@ -1,41 +1,28 @@
 import { button, div } from "../lib/ui.js";
 import { Meme } from "./meme.js";
 
-export const RevealMemes = ({ server }) => {
+export const RevealMemes = ({ client, server }) => {
   const { isUploader } = server.state;
-  return isUploader ? AllMemes({ server }) : CurrentMeme({ server });
+  return isUploader ? AllMemes({ client, server }) : CurrentMeme({ server });
 };
 
-const AllMemes = ({ server }) => {
-  const { caption, hasNext, hasPrevious, src, unviewedCaptions } = server.state;
+const AllMemes = ({ client, server }) => {
+  const { preview } = client.state;
+  const { caption, hasNext, hasPrevious, canDecideWinner } = server.state;
   const { decideWinner, getNextCaption, getPreviousCaption } = server.actions;
   return div(
     { className: "reveal-memes" },
-    button("Winner", {
-      disabled: unviewedCaptions.length > 0,
-      onclick: decideWinner,
-    }),
-    div({ className: "preview" }, Meme({ caption, src })),
+    button({ disabled: !canDecideWinner, onclick: decideWinner }, "Winner"),
+    Meme({ caption, src: preview }),
     div(
-      { style: "display: flex;" },
-      button("Back", {
-        disabled: !hasPrevious,
-        onclick: getPreviousCaption,
-        style: "flex-grow: 1;",
-      }),
-      button("Next", {
-        disabled: !hasNext,
-        onclick: getNextCaption,
-        style: "flex-grow: 1;",
-      })
+      { className: "navigation-controls" },
+      button({ disabled: !hasPrevious, onclick: getPreviousCaption }, "Back"),
+      button({ disabled: !hasNext, onclick: getNextCaption }, "Next")
     )
   );
 };
 
 const CurrentMeme = ({ server }) => {
   const { caption, src } = server.state;
-  return div(
-    { className: "reveal-memes" },
-    div({ className: "preview" }, Meme({ caption, src }))
-  );
+  return div({ className: "reveal-memes" }, Meme({ caption, src }));
 };
