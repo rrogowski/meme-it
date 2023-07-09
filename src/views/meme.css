@@ -31,7 +31,6 @@
 }
 
 .meme .horizontal-align {
-  container-type: size;
   display: flex;
   flex-direction: row;
   height: 100%;
@@ -39,10 +38,24 @@
   position: relative;
 }
 
+.meme .horizontal-boundary {
+  max-width: 100%;
+  position: relative;
+  border: solid purple 5px;
+}
+
 .meme .horizontally-bounded-image {
   height: 100%;
   max-width: 100%;
   vertical-align: middle;
+}
+
+.meme .horizontally-bounded-container {
+  container-type: size;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .meme p {

@@ -15,20 +15,28 @@ export const Meme = ({ caption, src }) => {
         { className: "vertical-boundary" },
         img({
           className: "vertically-bounded-image",
-          key: "vertically-bounded-image",
+          // key: `vertically-bounded-image-${src}`,
           src,
         }),
         div(
           { className: "vertically-bounded-container" },
           div(
             { className: "horizontal-align" },
-            img({
-              className: "horizontally-bounded-image",
-              key: "horizontally-bounded-image",
-              src,
-            }),
-            p(caption?.topText),
-            p(caption?.bottomText)
+            div(
+              { className: "horizontal-boundary" },
+              img({
+                className: "horizontally-bounded-image",
+                // key: `horizontally-bounded-image-${src}`,
+                src,
+              }),
+              div(
+                {
+                  className: "horizontally-bounded-container",
+                },
+                p(caption?.topText),
+                p(caption?.bottomText)
+              )
+            )
           )
         )
       )
