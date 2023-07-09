@@ -1,7 +1,7 @@
-import { post } from "../http.js";
-import { createWebSocketConnection } from "../web-socket.js";
 import { getArrayBufferFromDataURL } from "../lib/file.js";
+import { post } from "../lib/http.js";
 import { createState } from "../lib/state.js";
+import { createWebSocketConnection } from "../lib/web-socket.js";
 import { client } from "./client.mjs";
 
 export const server = createState({
