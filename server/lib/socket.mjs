@@ -30,9 +30,14 @@ export const upgrade = (request, socket) => {
     // cannot end if there is data left to be read.
     socket.read();
   });
+  socket.on("error", (error) => {
+    console.error(error);
+    sockets.splice(sockets.indexOf(socket), 1);
+    onDisconnectCallback({ isHost, name });
+  });
   socket.on("end", () => {
     sockets.splice(sockets.indexOf(socket), 1);
-    onConnectCallback({ isHost, name });
+    onDisconnectCallback({ isHost, name });
   });
 };
 
@@ -82,10 +87,5 @@ const sendTextFrame = function (socket, text) {
     Buffer.from([secondByte]),
     payload,
   ]);
-
-  try {
-    socket.write(frame);
-  } catch (e) {
-    console.error(e);
-  }
+  socket.write(frame);
 };
