@@ -24,7 +24,7 @@ export const createActions = ({ state, setState }) => {
       post("/reveal");
     },
     setBottomText(event) {
-      setState({ bottomText: event.target.value });
+      setState({ bottomText: event.target.value, preview: null });
     },
     setName(event) {
       setState({ name: event.target.value });
@@ -32,11 +32,11 @@ export const createActions = ({ state, setState }) => {
     setPreview(event) {
       const file = event.target.files[0];
       readFileAsDataURL(file, (result) => {
-        setState({ preview: result });
+        setState({ bottomText: null, preview: result, topText: null });
       });
     },
     setTopText(event) {
-      setState({ topText: event.target.value });
+      setState({ preview: null, topText: event.target.value });
     },
     uploadCaption() {
       const { bottomText, name, topText } = state;
