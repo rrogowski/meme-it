@@ -8,11 +8,11 @@ export const RevealMemes = ({ actions, state }) => {
 
 const AllMemes = ({ actions, state }) => {
   const { decideWinner, goToNextCaption, goToPrevCaption } = actions;
-  const { canDecide, caption, hasNextCaption, hasPrevCaption, preview } = state;
+  const { canDecide, caption, hasNextCaption, hasPrevCaption, src } = state;
   return div(
     { className: "reveal-memes" },
     button({ disabled: !canDecide, onclick: decideWinner }, "Start New Round"),
-    Meme({ ...caption, src: preview }),
+    Meme({ ...caption, src }),
     div(
       { className: "navigation-controls" },
       button({ disabled: !hasPrevCaption, onclick: goToPrevCaption }, "Back"),
