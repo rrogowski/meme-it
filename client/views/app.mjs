@@ -4,7 +4,7 @@ import { RevealMemes } from "./reveal-memes.mjs";
 import { SelectImage } from "./select-image.mjs";
 
 export const App = ({ actions, state }) => {
-  console.log(state.preview);
+  console.log(state);
   const View = getView(state);
   return View({ actions, state });
 };

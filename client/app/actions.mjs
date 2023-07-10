@@ -7,7 +7,7 @@ export const createActions = ({ state, setState }) => {
   return {
     connectToServer() {
       const { isHost, name } = state;
-      const searchParams = new URLSearchParams({ isHost, name });
+      const searchParams = new URLSearchParams(isHost ? { isHost } : { name });
       const url = `ws://${window.location.hostname}:8000/?${searchParams}`;
       createWebSocketConnection({ url, onData: setState });
     },

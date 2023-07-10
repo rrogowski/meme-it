@@ -2,9 +2,9 @@ export const createState = (initialState = {}) => {
   return {
     ...initialState,
     get canCaption() {
-      const { captions, name } = this;
+      const { captions, isHost, name } = this;
       const authors = captions.map(({ author }) => author);
-      return !authors.includes(name);
+      return !isHost && !authors.includes(name);
     },
     get canDecide() {
       const { captions } = this;
@@ -29,15 +29,6 @@ export const createState = (initialState = {}) => {
       const { index } = this;
       return index > 0;
     },
-    // get areCaptionsPending() {
-    //   const { captions, names, uploader } = this;
-    //   const authors = captions.map(({ author }) => author);
-    //   return;
-    // },
-    // get captioners() {
-    //   const { captions } = this;
-    //   return captions.map(({ author }) => author);
-    // },
     get isCaptionInvalid() {
       const { bottomText, topText } = this;
       return !bottomText && !topText;
@@ -50,17 +41,6 @@ export const createState = (initialState = {}) => {
       const { name, uploader } = this;
       return name === uploader;
     },
-    // get namesPendingCaption() {
-    //   const { captions, names, uploader } = this;
-    //   const authors =
-    //     return names
-    //       .filter((name) => name !== uploader)
-    //       .filter((name) => !captioners.includes(name));
-    // },
-    // get isValidCaption() {
-    //   const { bottomText, topText } = this;
-    //   return bottomText || topText;
-    // },
     get pendingAuthors() {
       const { captions, names, uploader } = this;
       const authors = captions.map(({ author }) => author);
@@ -68,9 +48,5 @@ export const createState = (initialState = {}) => {
         .filter((name) => name !== uploader)
         .filter((name) => !authors.includes(name));
     },
-    // get unviewedCaptions() {
-    //   const { captions } = this;
-    //   return captions.filter(({ wasViewed }) => !wasViewed);
-    // },
   };
 };

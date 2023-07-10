@@ -13,14 +13,22 @@ export const Meme = ({ bottomText, src, topText }) => {
       { className: "vertical-aligner" },
       div(
         { className: "vertical-bounder" },
-        img({ className: "vertically-bounded-image", src }),
+        img({
+          className: "vertically-bounded-image",
+          key: `${src}-vertically-bounded`,
+          src,
+        }),
         div(
           { className: "vertically-bounded-container" },
           div(
             { className: "horizontal-aligner" },
             div(
               { className: "horizontal-bounder" },
-              img({ className: "horizontally-bounded-image", src }),
+              img({
+                className: "horizontally-bounded-image",
+                key: `${src}-horizontally-bounded`,
+                src,
+              }),
               div(
                 { className: "horizontally-bounded-container" },
                 p(topText),

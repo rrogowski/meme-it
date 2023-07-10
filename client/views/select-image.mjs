@@ -26,9 +26,19 @@ const WaitingForUpload = ({ state }) => {
   );
 };
 
+const WaitingForPlayers = () => {
+  return div(
+    { className: "select-image" },
+    p(`Waiting for at least one player to join`)
+  );
+};
+
 const getView = (state) => {
-  const { isUploader } = state;
-  return isUploader ? UploadImage : WaitingForUpload;
+  const { isUploader, uploader } = state;
+  if (isUploader) {
+    return UploadImage;
+  }
+  return uploader ? WaitingForUpload : WaitingForPlayers;
 };
 
 const openFileDialog = () => {
