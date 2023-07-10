@@ -20,9 +20,9 @@ export const createActions = ({ address, port, state, setState }) => {
       index--;
       setState({ index });
     },
-    removePlayer({ isHost, name }) {
+    removePlayer({ name }) {
       const { names } = state;
-      setState({ names: isHost ? names : names.filter((n) => n !== name) });
+      setState({ names: names.filter((n) => n !== name) });
     },
     revealMemes() {
       const { captions } = state;
