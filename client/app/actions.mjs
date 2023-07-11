@@ -5,7 +5,13 @@ import { createWebSocketConnection } from "../lib/web-socket.mjs";
 
 export const createActions = ({ state, setState }) => {
   return {
-    connectToServer() {
+    connectAsHost() {
+      const { isHost, name } = state;
+      const searchParams = new URLSearchParams(isHost ? { isHost } : { name });
+      const url = `ws://${window.location.hostname}:8000/?${searchParams}`;
+      createWebSocketConnection({ url, onData: setState });
+    },
+    connectAsPlayer() {
       const { isHost, name } = state;
       const searchParams = new URLSearchParams(isHost ? { isHost } : { name });
       const url = `ws://${window.location.hostname}:8000/?${searchParams}`;
