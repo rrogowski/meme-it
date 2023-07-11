@@ -22,12 +22,8 @@ const EnterCaption = ({ actions, state }) => {
   return div(
     { className: "caption-image" },
     div({ className: "preview" }, Meme({ bottomText, src, topText })),
-    input({ placeholder: "Top Text", value: topText, oninput: setTopText }),
-    input({
-      placeholder: "Bottom Text",
-      value: bottomText,
-      oninput: setBottomText,
-    }),
+    input({ placeholder: "Top Text", oninput: setTopText }),
+    input({ placeholder: "Bottom Text", oninput: setBottomText }),
     button({ disabled: isCaptionInvalid, onclick: uploadCaption }, "Upload")
   );
 };
