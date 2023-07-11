@@ -5,7 +5,7 @@ export const MainMenu = ({ actions, state }) => {
   const { isHost, name } = state;
   return div(
     { className: "main-menu" },
-    input({ key: "name", oninput: setName, placeholder: "name", value: name }),
+    input({ oninput: setName, placeholder: "name", value: name }),
     button({ disabled: isHost, onclick: connectToServer }, "Join as Player"),
     button({ disabled: !isHost, onclick: connectToServer }, "Join as Host")
   );
