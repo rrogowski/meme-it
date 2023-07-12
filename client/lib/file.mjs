@@ -1,5 +1,5 @@
 export const readFileAsDataURL = (file, onResult) => {
-  const reader = new FileReader();
+  const reader = new window.FileReader();
   reader.addEventListener("load", () => onResult(reader.result));
   reader.readAsDataURL(file);
 };

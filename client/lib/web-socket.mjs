@@ -1,5 +1,5 @@
 export const createWebSocketConnection = ({ url, onData }) => {
-  const socket = new WebSocket(url);
+  const socket = new window.WebSocket(url);
   socket.addEventListener("message", ({ data: frame }) => {
     parseNextTextFrame(frame, onData);
   });

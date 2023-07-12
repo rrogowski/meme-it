@@ -43,6 +43,6 @@ const getView = (state) => {
 
 const openFileDialog = () => {
   const fileInput = document.querySelector("input[type=file]");
-  const event = new MouseEvent("click");
+  const event = new window.MouseEvent("click");
   fileInput.dispatchEvent(event);
 };
