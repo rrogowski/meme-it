@@ -1,8 +1,10 @@
 import { getCurrentState } from "./store";
 
 export const getDerivedState = () => {
-  const { name } = getCurrentState();
+  const { name, uploader } = getCurrentState();
   return {
-    isHost: !name,
+    hasUploader: uploader !== undefined,
+    isHost: name === "",
+    isUploader: name === uploader,
   };
 };

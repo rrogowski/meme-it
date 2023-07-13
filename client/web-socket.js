@@ -13,7 +13,7 @@ let body = "";
 const onMessage = (event) => {
   body += event.data;
   const data = tryJsonParse(body);
-  if (data) {
+  if (data !== null) {
     body = "";
     dispatch(data);
   }

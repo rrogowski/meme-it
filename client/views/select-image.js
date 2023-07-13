@@ -1,15 +1,18 @@
 import { actions } from "../actions.js";
-import { getCurrentState, state } from "../store.js";
+import { getDerivedState } from "../helpers.js";
+import { getCurrentState } from "../store.js";
 import { button, div, input, p } from "../ui.js";
 import { Meme } from "./meme.js";
 
 export const SelectImage = () => {
-  const { uploader } = getCurrentState();
-  const { isUploader } = state.derived;
+  const { hasUploader, isUploader } = getDerivedState();
   if (isUploader) {
     return UploadImage();
+  } else if (hasUploader) {
+    return WaitingForUpload();
+  } else {
+    return WaitingForPlayers();
   }
-  return uploader ? WaitingForUpload() : WaitingForPlayers();
 };
 
 const UploadImage = () => {
