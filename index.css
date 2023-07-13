@@ -4,6 +4,10 @@
 @import "client/views/reveal-memes.css";
 @import "client/views/select-image.css";
 
+input[type="file"] {
+  display: none;
+}
+
 .page {
   display: flex;
   height: 100vh;
