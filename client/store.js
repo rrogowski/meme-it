@@ -63,10 +63,6 @@ const getDerivedState = (state) => {
       const { bottomText, topText } = state;
       return !bottomText && !topText;
     },
-    get isUploader() {
-      const { name, uploader } = state;
-      return name === uploader;
-    },
     get pendingAuthors() {
       const { captions, names, uploader } = state;
       const authors = captions.map(({ author }) => author);

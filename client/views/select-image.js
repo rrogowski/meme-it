@@ -5,10 +5,11 @@ import { button, div, input, p } from "../ui.js";
 import { Meme } from "./meme.js";
 
 export const SelectImage = () => {
-  const { hasUploader, isUploader } = getDerivedState();
+  const { uploader } = getCurrentState();
+  const { isUploader } = getDerivedState();
   if (isUploader) {
     return UploadImage();
-  } else if (hasUploader) {
+  } else if (uploader) {
     return WaitingForUpload();
   } else {
     return WaitingForPlayers();

@@ -1,11 +1,16 @@
 import { actions } from "../actions.js";
+import { getDerivedState } from "../helpers.js";
 import { getCurrentState, state } from "../store.js";
 import { button, div } from "../ui.js";
 import { Meme } from "./meme.js";
 
 export const RevealMemes = () => {
-  const { isUploader } = state.derived;
-  return isUploader ? AllMemes() : CurrentMeme();
+  const { isUploader } = getDerivedState();
+  if (isUploader) {
+    return AllMemes();
+  } else {
+    return CurrentMeme();
+  }
 };
 
 const AllMemes = () => {

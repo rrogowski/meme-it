@@ -1,10 +1,12 @@
 import { actions } from "../actions.js";
+import { getDerivedState } from "../helpers.js";
 import { getCurrentState, state } from "../store.js";
 import { button, div, input, p } from "../ui.js";
 import { Meme } from "./meme.js";
 
 export const CaptionImage = () => {
-  const { canCaption, canReveal, isUploader } = state.derived;
+  const { isUploader } = getDerivedState();
+  const { canCaption, canReveal } = state.derived;
   if (isUploader) {
     return CaptionCounter();
   } else if (canCaption) {
