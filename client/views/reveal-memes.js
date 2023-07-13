@@ -15,7 +15,8 @@ export const RevealMemes = () => {
 
 const AllMemes = () => {
   const { src } = getCurrentState();
-  const { canDecide, caption, hasNextCaption, hasPrevCaption } = state.derived;
+  const { caption } = getDerivedState();
+  const { canDecide, hasNextCaption, hasPrevCaption } = state.derived;
   const { decideWinner, goToNextCaption, goToPrevCaption } = actions;
   return div(
     { className: "page" },
@@ -31,6 +32,6 @@ const AllMemes = () => {
 
 const CurrentMeme = () => {
   const { src } = getCurrentState();
-  const { caption } = state.derived;
+  const { caption } = getDerivedState();
   return div({ className: "page" }, Meme({ ...caption, src }));
 };
