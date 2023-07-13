@@ -1,14 +1,24 @@
-import { button, div, input, p } from "../lib/ui.mjs";
-import { Meme } from "./meme.mjs";
+import { actions } from "../actions.js";
+import { button, div, input, p } from "../lib/ui.js";
+import { state } from "../store.js";
+import { Meme } from "./meme.js";
 
-export const CaptionImage = ({ actions, state }) => {
-  const View = getView(state);
-  return View({ actions, state });
+export const CaptionImage = () => {
+  const { canCaption, canReveal, isUploader } = state.derived;
+  if (isUploader) {
+    return CaptionCounter();
+  } else if (canCaption) {
+    return EnterCaption();
+  } else if (canReveal) {
+    return WaitingForReveal();
+  }
+  return WaitingForCaptions();
 };
 
-const CaptionCounter = ({ actions, state }) => {
+const CaptionCounter = () => {
   const { revealMemes } = actions;
-  const { canReveal, captions } = state;
+  const { captions } = state.current;
+  const { canReveal } = state.derived;
   return div(
     { className: "caption-image" },
     p(`Received ${captions.length} caption(s)`),
@@ -16,9 +26,10 @@ const CaptionCounter = ({ actions, state }) => {
   );
 };
 
-const EnterCaption = ({ actions, state }) => {
+const EnterCaption = () => {
   const { setBottomText, setTopText, uploadCaption } = actions;
-  const { bottomText, isCaptionInvalid, src, topText } = state;
+  const { bottomText, src, topText } = state.current;
+  const { isCaptionInvalid } = state.derived;
   return div(
     { className: "caption-image" },
     div({ className: "preview" }, Meme({ bottomText, src, topText })),
@@ -28,31 +39,19 @@ const EnterCaption = ({ actions, state }) => {
   );
 };
 
-const WaitingForReveal = ({ state }) => {
-  const { uploader } = state;
+const WaitingForReveal = () => {
+  const { uploader } = state.current;
   return div(
     { className: "caption-image" },
     p(`Waiting for ${uploader} to reveal memes`)
   );
 };
 
-const WaitingForCaptions = ({ state }) => {
-  const { pendingAuthors } = state;
+const WaitingForCaptions = () => {
+  const { pendingAuthors } = state.derived;
   return div(
     { className: "caption-image" },
     p("Waiting for captions from:"),
     ...pendingAuthors.map(p)
   );
-};
-
-const getView = (state) => {
-  const { canCaption, canReveal, isUploader } = state;
-  if (isUploader) {
-    return CaptionCounter;
-  } else if (canCaption) {
-    return EnterCaption;
-  } else if (canReveal) {
-    return WaitingForReveal;
-  }
-  return WaitingForCaptions;
 };

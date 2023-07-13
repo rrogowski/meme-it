@@ -1,14 +1,17 @@
-import { button, div } from "../lib/ui.mjs";
-import { Meme } from "./meme.mjs";
+import { actions } from "../actions.js";
+import { button, div } from "../lib/ui.js";
+import { state } from "../store.js";
+import { Meme } from "./meme.js";
 
-export const RevealMemes = ({ actions, state }) => {
-  const View = getView(state);
-  return View({ actions, state });
+export const RevealMemes = () => {
+  const { isUploader } = state.derived;
+  return isUploader ? AllMemes() : CurrentMeme();
 };
 
-const AllMemes = ({ actions, state }) => {
+const AllMemes = () => {
+  const { src } = state.current;
+  const { canDecide, caption, hasNextCaption, hasPrevCaption } = state.derived;
   const { decideWinner, goToNextCaption, goToPrevCaption } = actions;
-  const { canDecide, caption, hasNextCaption, hasPrevCaption, src } = state;
   return div(
     { className: "reveal-memes" },
     button({ disabled: !canDecide, onclick: decideWinner }, "Start New Round"),
@@ -21,12 +24,8 @@ const AllMemes = ({ actions, state }) => {
   );
 };
 
-const CurrentMeme = ({ state }) => {
-  const { caption, src } = state;
+const CurrentMeme = () => {
+  const { src } = state.current;
+  const { caption } = state.derived;
   return div({ className: "reveal-memes" }, Meme({ ...caption, src }));
-};
-
-const getView = (state) => {
-  const { isUploader } = state;
-  return isUploader ? AllMemes : CurrentMeme;
 };

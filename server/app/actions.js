@@ -1,4 +1,4 @@
-import { rotate, shuffle } from "../lib/array.mjs";
+import { rotate, shuffle } from "../lib/array.js";
 
 export const createActions = ({ address, port, state, setState }) => {
   return {
@@ -11,14 +11,12 @@ export const createActions = ({ address, port, state, setState }) => {
     },
     goToNextCaption() {
       const { captions, index } = state;
-      index++;
-      captions[index].wasViewed = true;
-      setState({ captions, index });
+      captions[index + 1].wasViewed = true;
+      setState({ captions, index: index + 1 });
     },
     goToPrevCaption() {
       const { index } = state;
-      index--;
-      setState({ index });
+      setState({ index: index - 1 });
     },
     removePlayer({ name }) {
       const { names } = state;

@@ -28,9 +28,9 @@ export const img = createNativeComponent("img");
 export const input = createNativeComponent("input");
 export const p = createNativeComponent("p");
 
-export const render = (Component, ...args) => {
+export const render = (Component) => {
   const { activeElement } = document;
-  const node = Component(...args);
+  const node = Component();
   document.body.replaceChildren(node);
   activeElement.focus();
 };

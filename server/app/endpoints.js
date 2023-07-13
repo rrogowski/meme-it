@@ -44,7 +44,7 @@ export const createEndpoints = ({ actions }) => {
         break;
       case "/prev":
         response.setHeader("Access-Control-Allow-Origin", "*");
-        updateGameState({ type: "PREVIOUS_CAPTION" });
+        actions.goToPrevCaption();
         response.end();
         break;
       case "/reveal":

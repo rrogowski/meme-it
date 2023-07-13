@@ -20,8 +20,8 @@ export const upgrade = (request, socket) => {
   sockets.push(socket);
 
   const url = new URL(request.url, `ws://${request.headers.host}`);
-  const isHost = url.searchParams.get("isHost") === "true";
   const name = url.searchParams.get("name");
+  const isHost = name === null;
   onConnectCallback({ isHost, name });
 
   socket.on("readable", () => {
