@@ -1,10 +1,10 @@
 import { actions } from "../actions.js";
-import { button, div, input, p } from "../ui.js";
 import { state } from "../store.js";
+import { button, div, input, p } from "../ui.js";
 import { Meme } from "./meme.js";
 
 export const SelectImage = () => {
-  const { uploader } = state.current;
+  const { uploader } = getCurrentState();
   const { isUploader } = state.derived;
   if (isUploader) {
     return UploadImage();
@@ -13,7 +13,7 @@ export const SelectImage = () => {
 };
 
 const UploadImage = () => {
-  const { preview } = state.current;
+  const { preview } = getCurrentState();
   const { openFileDialog, setPreview, uploadImage } = actions;
   return div(
     { className: "select-image" },
@@ -25,7 +25,7 @@ const UploadImage = () => {
 };
 
 const WaitingForUpload = () => {
-  const { uploader } = state.current;
+  const { uploader } = getCurrentState();
   return div(
     { className: "select-image" },
     p(`Waiting for ${uploader} to upload image`)

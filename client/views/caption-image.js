@@ -1,6 +1,6 @@
 import { actions } from "../actions.js";
+import { getCurrentState, state } from "../store.js";
 import { button, div, input, p } from "../ui.js";
-import { state } from "../store.js";
 import { Meme } from "./meme.js";
 
 export const CaptionImage = () => {
@@ -17,7 +17,7 @@ export const CaptionImage = () => {
 
 const CaptionCounter = () => {
   const { revealMemes } = actions;
-  const { captions } = state.current;
+  const { captions } = getCurrentState();
   const { canReveal } = state.derived;
   return div(
     { className: "caption-image" },
@@ -28,7 +28,7 @@ const CaptionCounter = () => {
 
 const EnterCaption = () => {
   const { setBottomText, setTopText, uploadCaption } = actions;
-  const { bottomText, src, topText } = state.current;
+  const { bottomText, src, topText } = getCurrentState();
   const { isCaptionInvalid } = state.derived;
   return div(
     { className: "caption-image" },
@@ -40,7 +40,7 @@ const EnterCaption = () => {
 };
 
 const WaitingForReveal = () => {
-  const { uploader } = state.current;
+  const { uploader } = getCurrentState();
   return div(
     { className: "caption-image" },
     p(`Waiting for ${uploader} to reveal memes`)

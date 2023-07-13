@@ -1,6 +1,6 @@
 import { actions } from "../actions.js";
+import { getCurrentState, state } from "../store.js";
 import { button, div } from "../ui.js";
-import { state } from "../store.js";
 import { Meme } from "./meme.js";
 
 export const RevealMemes = () => {
@@ -9,7 +9,7 @@ export const RevealMemes = () => {
 };
 
 const AllMemes = () => {
-  const { src } = state.current;
+  const { src } = getCurrentState();
   const { canDecide, caption, hasNextCaption, hasPrevCaption } = state.derived;
   const { decideWinner, goToNextCaption, goToPrevCaption } = actions;
   return div(
@@ -25,7 +25,7 @@ const AllMemes = () => {
 };
 
 const CurrentMeme = () => {
-  const { src } = state.current;
+  const { src } = getCurrentState();
   const { caption } = state.derived;
   return div({ className: "reveal-memes" }, Meme({ ...caption, src }));
 };

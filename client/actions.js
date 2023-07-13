@@ -1,6 +1,6 @@
 import { post } from "./http.js";
 import { getArrayBufferFromDataURL, readFileAsDataURL } from "./file.js";
-import { dispatch, state } from "./store.js";
+import { dispatch, getCurrentState, state } from "./store.js";
 import { initializeWebSocket } from "./web-socket.js";
 
 export const actions = {
@@ -17,7 +17,7 @@ export const actions = {
     initializeWebSocket();
   },
   joinAsPlayer() {
-    const { name } = state.current;
+    const { name } = getCurrentState();
     initializeWebSocket({ name });
   },
   openFileDialog() {
@@ -48,12 +48,12 @@ export const actions = {
     dispatch({ type: "TOP_TEXT_CHANGED", payload });
   },
   uploadCaption() {
-    const { bottomText, name, topText } = state.current;
+    const { bottomText, name, topText } = getCurrentState();
     const caption = { author: name, bottomText, topText };
     post("/caption", JSON.stringify(caption));
   },
   uploadImage() {
-    const { preview } = state.current;
+    const { preview } = getCurrentState();
     getArrayBufferFromDataURL(preview, (result) => {
       post("/upload", result);
     });

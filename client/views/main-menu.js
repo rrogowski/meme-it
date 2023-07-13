@@ -1,9 +1,9 @@
 import { actions } from "../actions.js";
+import { getCurrentState, state } from "../store.js";
 import { button, div, input } from "../ui.js";
-import { state } from "../store.js";
 
 export const MainMenu = () => {
-  const { name } = state.current;
+  const { name } = getCurrentState();
   const { isHost } = state.derived;
   const { joinAsHost, joinAsPlayer, setName } = actions;
   return div(

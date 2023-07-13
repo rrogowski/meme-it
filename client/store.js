@@ -6,9 +6,6 @@ let currentState = undefined;
 const onStateChange = createEmitter();
 
 export const state = {
-  get current() {
-    return Object.freeze({ ...currentState });
-  },
   get derived() {
     return Object.freeze(getDerivedState(currentState));
   },
