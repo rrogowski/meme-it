@@ -36,10 +36,10 @@ const getDerivedState = (state) => {
       return captions.every(({ wasViewed }) => wasViewed);
     },
     get canReveal() {
-      const { captions, names, uploader } = state;
+      const { captions, czar, names } = state;
       const authors = captions.map(({ author }) => author);
       return names
-        .filter((name) => name !== uploader)
+        .filter((name) => name !== czar)
         .every((name) => authors.includes(name));
     },
     get caption() {
@@ -59,10 +59,10 @@ const getDerivedState = (state) => {
       return !bottomText && !topText;
     },
     get pendingAuthors() {
-      const { captions, names, uploader } = state;
+      const { captions, czar, names } = state;
       const authors = captions.map(({ author }) => author);
       return names
-        .filter((name) => name !== uploader)
+        .filter((name) => name !== czar)
         .filter((name) => !authors.includes(name));
     },
   };

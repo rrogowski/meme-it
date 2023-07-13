@@ -5,12 +5,11 @@ import { button, div, input, p } from "../ui.js";
 import { Meme } from "./meme.js";
 
 export const CaptionImage = () => {
-  const { canCaption, isUploader } = getDerivedState();
-  const { canReveal } = state.derived;
-  if (isUploader) {
+  const { canCaption, canReveal, isCzar } = getDerivedState();
+  if (isCzar) {
     return CaptionCounter();
   } else if (canCaption) {
-    return EnterCaption();
+    return UploadCaption();
   } else if (canReveal) {
     return WaitingForReveal();
   }
@@ -20,7 +19,7 @@ export const CaptionImage = () => {
 const CaptionCounter = () => {
   const { revealMemes } = actions;
   const { captions } = getCurrentState();
-  const { canReveal } = state.derived;
+  const { canReveal } = getDerivedState();
   return div(
     { className: "page" },
     p(`Received ${captions.length} caption(s)`),
@@ -28,7 +27,7 @@ const CaptionCounter = () => {
   );
 };
 
-const EnterCaption = () => {
+const UploadCaption = () => {
   const { setBottomText, setTopText, uploadCaption } = actions;
   const { bottomText, src, topText } = getCurrentState();
   const { isCaptionInvalid } = state.derived;
@@ -42,11 +41,8 @@ const EnterCaption = () => {
 };
 
 const WaitingForReveal = () => {
-  const { uploader } = getCurrentState();
-  return div(
-    { className: "page" },
-    p(`Waiting for ${uploader} to reveal memes`)
-  );
+  const { czar } = getCurrentState();
+  return div({ className: "page" }, p(`Waiting for ${czar} to reveal memes`));
 };
 
 const WaitingForCaptions = () => {

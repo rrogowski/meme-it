@@ -3,10 +3,10 @@ import { rotate, shuffle } from "../lib/array.js";
 export const createActions = ({ address, port, state, setState }) => {
   return {
     addPlayer({ isHost, name }) {
-      const { names, uploader } = state;
+      const { czar, names } = state;
       setState({
         names: isHost ? names : names.concat(name),
-        uploader: uploader ? uploader : name,
+        czar: czar ? czar : name,
       });
     },
     goToNextCaption() {
@@ -36,7 +36,7 @@ export const createActions = ({ address, port, state, setState }) => {
     startNewRound() {
       const { names } = state;
       rotate(names);
-      setState({ names, phase: "SELECT_IMAGE", uploader: names[0] });
+      setState({ czar: names[0], names, phase: "SELECT_IMAGE" });
     },
     uploadImage(imageNumber) {
       const src = `http://${address}:${port}/image/${imageNumber}`;

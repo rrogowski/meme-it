@@ -5,8 +5,8 @@ import { button, div } from "../ui.js";
 import { Meme } from "./meme.js";
 
 export const RevealMemes = () => {
-  const { isUploader } = getDerivedState();
-  if (isUploader) {
+  const { isCzar } = getDerivedState();
+  if (isCzar) {
     return AllMemes();
   } else {
     return CurrentMeme();

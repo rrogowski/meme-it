@@ -5,11 +5,11 @@ import { button, div, input, p } from "../ui.js";
 import { Meme } from "./meme.js";
 
 export const SelectImage = () => {
-  const { uploader } = getCurrentState();
-  const { isUploader } = getDerivedState();
-  if (isUploader) {
+  const { czar } = getCurrentState();
+  const { isCzar } = getDerivedState();
+  if (isCzar) {
     return UploadImage();
-  } else if (uploader) {
+  } else if (czar) {
     return WaitingForUpload();
   } else {
     return WaitingForPlayers();
@@ -29,11 +29,8 @@ const UploadImage = () => {
 };
 
 const WaitingForUpload = () => {
-  const { uploader } = getCurrentState();
-  return div(
-    { className: "page" },
-    p(`Waiting for ${uploader} to upload image`)
-  );
+  const { czar } = getCurrentState();
+  return div({ className: "page" }, p(`Waiting for ${czar} to upload image`));
 };
 
 const WaitingForPlayers = () => {
