@@ -38,6 +38,11 @@ export const actions = {
   },
   setPreview(event) {
     const file = event.target.files[0];
+    if (!file) {
+      const payload = { preview: "" };
+      dispatch({ type: "PREVIEW_UPDATED", payload });
+      return;
+    }
     readFileAsDataURL(file, (result) => {
       const payload = { preview: result };
       dispatch({ type: "PREVIEW_UPDATED", payload });

@@ -1,5 +1,4 @@
 @import "client/views/meme.css";
-@import "client/views/reveal-memes.css";
 
 * {
   box-sizing: border-box;
@@ -19,10 +18,10 @@ button {
 input {
   flex-shrink: 0;
   margin-bottom: 1rem;
-}
 
-input[type="file"] {
-  display: none;
+  &[type="file"] {
+    display: none;
+  }
 }
 
 p {
@@ -36,4 +35,12 @@ p {
   padding: 1rem;
   padding-bottom: 0;
   text-align: center;
+}
+
+.button-group {
+  display: flex;
+
+  & button {
+    flex-grow: 1;
+  }
 }

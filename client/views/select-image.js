@@ -19,7 +19,7 @@ const UploadImage = () => {
     { className: "page" },
     input({ accept: "image/*", onchange: setPreview, type: "file" }),
     button({ onclick: openFileDialog }, "Choose File"),
-    preview ? Meme({ src: preview }) : null,
+    Meme({ src: preview }),
     button({ disabled: !preview, onclick: uploadImage }, "Upload Image")
   );
 };

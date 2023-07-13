@@ -13,11 +13,11 @@ const AllMemes = () => {
   const { canDecide, caption, hasNextCaption, hasPrevCaption } = state.derived;
   const { decideWinner, goToNextCaption, goToPrevCaption } = actions;
   return div(
-    { className: "reveal-memes page" },
+    { className: "page" },
     button({ disabled: !canDecide, onclick: decideWinner }, "Start New Round"),
     Meme({ ...caption, src }),
     div(
-      { className: "navigation-controls" },
+      { className: "button-group" },
       button({ disabled: !hasPrevCaption, onclick: goToPrevCaption }, "Back"),
       button({ disabled: !hasNextCaption, onclick: goToNextCaption }, "Next")
     )
