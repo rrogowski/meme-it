@@ -16,7 +16,7 @@ const UploadImage = () => {
   const { preview } = getCurrentState();
   const { openFileDialog, setPreview, uploadImage } = actions;
   return div(
-    { className: "select-image" },
+    { className: "page select-image" },
     input({ accept: "image/*", onchange: setPreview, type: "file" }),
     button({ onclick: openFileDialog }, "Choose File"),
     div({ className: "preview" }, preview ? Meme({ src: preview }) : null),
