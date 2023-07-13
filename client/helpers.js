@@ -11,5 +11,6 @@ export const getDerivedState = () => {
     hasCaption: topText.length > 0 || bottomText.length > 0,
     isCzar: name === czar,
     isHost: name === "",
+    pendingAuthors: citizens.filter((n) => !authors.includes(n)),
   };
 };

@@ -46,7 +46,7 @@ const WaitingForReveal = () => {
 };
 
 const WaitingForCaptions = () => {
-  const { pendingAuthors } = state.derived;
+  const { pendingAuthors } = getDerivedState();
   return div(
     { className: "page" },
     p("Waiting for captions from:"),

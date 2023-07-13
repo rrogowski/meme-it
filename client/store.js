@@ -47,12 +47,5 @@ const getDerivedState = (state) => {
       const { index } = state;
       return index > 0;
     },
-    get pendingAuthors() {
-      const { captions, czar, names } = state;
-      const authors = captions.map(({ author }) => author);
-      return names
-        .filter((name) => name !== czar)
-        .filter((name) => !authors.includes(name));
-    },
   };
 };
