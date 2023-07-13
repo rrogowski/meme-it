@@ -1,12 +1,3 @@
-.caption-image {
-  display: flex;
-  height: 100vh;
-  flex-direction: column;
-  padding: 1rem;
-  padding-bottom: 0;
-  text-align: center;
-}
-
 .caption-image input,
 .caption-image button {
   flex-shrink: 0;

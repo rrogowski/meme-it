@@ -20,7 +20,7 @@ const CaptionCounter = () => {
   const { captions } = getCurrentState();
   const { canReveal } = state.derived;
   return div(
-    { className: "caption-image" },
+    { className: "caption-image page" },
     p(`Received ${captions.length} caption(s)`),
     button({ disabled: !canReveal, onclick: revealMemes }, "Reveal Memes")
   );
@@ -31,7 +31,7 @@ const EnterCaption = () => {
   const { bottomText, src, topText } = getCurrentState();
   const { isCaptionInvalid } = state.derived;
   return div(
-    { className: "caption-image" },
+    { className: "caption-image page" },
     div({ className: "preview" }, Meme({ bottomText, src, topText })),
     input({ placeholder: "Top Text", oninput: setTopText }),
     input({ placeholder: "Bottom Text", oninput: setBottomText }),
@@ -42,7 +42,7 @@ const EnterCaption = () => {
 const WaitingForReveal = () => {
   const { uploader } = getCurrentState();
   return div(
-    { className: "caption-image" },
+    { className: "caption-image page" },
     p(`Waiting for ${uploader} to reveal memes`)
   );
 };
@@ -50,7 +50,7 @@ const WaitingForReveal = () => {
 const WaitingForCaptions = () => {
   const { pendingAuthors } = state.derived;
   return div(
-    { className: "caption-image" },
+    { className: "caption-image page" },
     p("Waiting for captions from:"),
     ...pendingAuthors.map(p)
   );

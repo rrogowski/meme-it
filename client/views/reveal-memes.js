@@ -13,7 +13,7 @@ const AllMemes = () => {
   const { canDecide, caption, hasNextCaption, hasPrevCaption } = state.derived;
   const { decideWinner, goToNextCaption, goToPrevCaption } = actions;
   return div(
-    { className: "reveal-memes" },
+    { className: "reveal-memes page" },
     button({ disabled: !canDecide, onclick: decideWinner }, "Start New Round"),
     Meme({ ...caption, src }),
     div(
@@ -27,5 +27,5 @@ const AllMemes = () => {
 const CurrentMeme = () => {
   const { src } = getCurrentState();
   const { caption } = state.derived;
-  return div({ className: "reveal-memes" }, Meme({ ...caption, src }));
+  return div({ className: "reveal-memes page" }, Meme({ ...caption, src }));
 };
