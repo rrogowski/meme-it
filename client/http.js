@@ -1,3 +1,5 @@
+import { getCurrentState } from "./state.js";
+
 export const decideWinner = () => {
   post("/winner");
 };

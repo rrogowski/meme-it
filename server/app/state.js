@@ -1,6 +1,7 @@
 export const createState = () => {
   let onStateChangeCallback;
   const state = {
+    czar: "",
     phase: "SELECT_IMAGE",
     players: [],
   };

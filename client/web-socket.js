@@ -8,6 +8,11 @@ export const openWebSocket = (options = {}) => {
   webSocket.addEventListener("close", closeConnection);
 };
 
+export const post = (endpoint, body) => {
+  const url = `http://${window.location.hostname}:8000`.concat(endpoint);
+  fetch(url, { body, method: "POST" });
+};
+
 let bodyStream = "";
 
 const handleMessage = (event) => {

@@ -1,4 +1,3 @@
-import { getDerivedState } from "../helpers.js";
 import { uploadImage } from "../http.js";
 import { getCurrentState, setState } from "../state.js";
 import { button, div, input, p } from "../ui.js";
@@ -55,4 +54,9 @@ const setPreview = (event) => {
     setState({ preview: reader.result });
   });
   reader.readAsDataURL(file);
+};
+
+const getDerivedState = () => {
+  const { czar, name } = getCurrentState();
+  return { hasCzar: czar !== "", isCzar: name === czar };
 };
