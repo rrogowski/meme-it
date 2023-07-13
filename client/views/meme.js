@@ -23,8 +23,9 @@ export const Meme = ({ bottomText, src, topText }) => {
               img({ className: "horizontally-bounded-image", src }),
               div(
                 { className: "horizontally-bounded-container" },
-                p(topText),
-                p(bottomText)
+                img({ className: "fully-bounded-image", src }),
+                p({ className: "top-text" }, topText),
+                p({ className: "bottom-text" }, bottomText)
               )
             )
           )

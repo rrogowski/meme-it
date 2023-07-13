@@ -18,10 +18,10 @@ button {
 input {
   flex-shrink: 0;
   margin-bottom: 1rem;
+}
 
-  &[type="file"] {
-    display: none;
-  }
+input[type="file"] {
+  display: none;
 }
 
 p {
@@ -39,8 +39,8 @@ p {
 
 .button-group {
   display: flex;
+}
 
-  & button {
-    flex-grow: 1;
-  }
+.button-group button {
+  flex-grow: 1;
 }
