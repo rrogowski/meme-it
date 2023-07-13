@@ -1,10 +1,10 @@
 import { getCurrentState } from "./store.js";
 
 export const getDerivedState = () => {
-  const state = { captions: [], names: [], ...getCurrentState() };
-  const { bottomText, captions, czar, index, name, names, topText } = state;
+  const state = { captions: [], players: [], ...getCurrentState() };
+  const { bottomText, captions, czar, index, name, players, topText } = state;
   const authors = captions.map(({ author }) => author);
-  const citizens = names.filter((n) => n !== czar);
+  const citizens = players.filter((player) => player !== czar);
   return {
     canCaption: citizens.includes(name) && !authors.includes(name),
     canDecide: captions.every(({ wasViewed }) => wasViewed),

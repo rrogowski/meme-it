@@ -3,10 +3,10 @@ import { rotate, shuffle } from "../lib/array.js";
 export const createActions = ({ address, port, state, setState }) => {
   return {
     addPlayer({ isHost, name }) {
-      const { czar, names } = state;
+      const { czar, players } = state;
       setState({
-        names: isHost ? names : names.concat(name),
         czar: czar ? czar : name,
+        players: isHost ? players : players.concat(name),
       });
     },
     goToNextCaption() {
@@ -19,8 +19,8 @@ export const createActions = ({ address, port, state, setState }) => {
       setState({ index: index - 1 });
     },
     removePlayer({ name }) {
-      const { names } = state;
-      setState({ names: names.filter((n) => n !== name) });
+      const { players } = state;
+      setState({ players: players.filter((player) => player !== name) });
     },
     revealMemes() {
       const { captions } = state;
@@ -34,9 +34,9 @@ export const createActions = ({ address, port, state, setState }) => {
       setState({ captions });
     },
     startNewRound() {
-      const { names } = state;
-      rotate(names);
-      setState({ czar: names[0], names, phase: "SELECT_IMAGE" });
+      const { players } = state;
+      rotate(players);
+      setState({ czar: players[0], phase: "SELECT_IMAGE", players });
     },
     uploadImage(imageNumber) {
       const src = `http://${address}:${port}/image/${imageNumber}`;
