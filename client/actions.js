@@ -1,5 +1,5 @@
 import { post } from "./http.js";
-import { getArrayBufferFromDataURL, readFileAsDataURL } from "./lib/file.js";
+import { getArrayBufferFromDataURL, readFileAsDataURL } from "./file.js";
 import { dispatch, state } from "./store.js";
 import { initializeWebSocket } from "./web-socket.js";
 
