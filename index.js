@@ -1,7 +1,5 @@
-import { actions } from "./client/actions.js";
 import { render } from "./client/lib/ui.js";
-import { subscribe } from "./client/store.js";
+import { initialize } from "./client/store.js";
 import { App } from "./client/views/app.js";
 
-subscribe(() => render(App));
-actions.initializeApp();
+initialize(() => render(App));

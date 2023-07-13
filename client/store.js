@@ -1,7 +1,7 @@
 import { createEventEmitter } from "./lib/emitter.js";
 import { reduce } from "./reducer.js";
 
-let currentState = null;
+let currentState;
 
 const emitter = createEventEmitter();
 
@@ -24,8 +24,9 @@ export const dispatch = (action) => {
   emitter.emit("change", state.current);
 };
 
-export const subscribe = (listener) => {
+export const initialize = (listener) => {
   emitter.on("change", listener);
+  dispatch({ type: "STORE_INITIALIZED" });
 };
 
 const getDerivedState = (state) => {

@@ -13,9 +13,6 @@ export const actions = {
   goToPrevCaption() {
     post("/prev");
   },
-  initializeApp() {
-    dispatch({ type: "APP_INITIALIZED" });
-  },
   joinAsHost() {
     initializeWebSocket();
   },
