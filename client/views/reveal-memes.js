@@ -1,5 +1,5 @@
-import { actions } from "../actions.js";
 import { getDerivedState } from "../helpers.js";
+import { decideWinner, goToNextCaption, goToPrevCaption } from "../http.js";
 import { getCurrentState } from "../state.js";
 import { button, div } from "../ui.js";
 import { Meme } from "./meme.js";
@@ -14,14 +14,12 @@ export const RevealMemes = () => {
 };
 
 const AllMemes = () => {
-  const { src } = getCurrentState();
-  const { canDecide, caption, hasNextCaption, hasPrevCaption } =
-    getDerivedState();
-  const { decideWinner, goToNextCaption, goToPrevCaption } = actions;
+  const { captions, index, src } = getCurrentState();
+  const { canDecide, hasNextCaption, hasPrevCaption } = getDerivedState();
   return div(
     { className: "page" },
     button({ disabled: !canDecide, onclick: decideWinner }, "Start New Round"),
-    Meme({ ...caption, src }),
+    Meme({ ...captions[index], src }),
     div(
       { className: "button-group" },
       button({ disabled: !hasPrevCaption, onclick: goToPrevCaption }, "Back"),
@@ -31,7 +29,6 @@ const AllMemes = () => {
 };
 
 const CurrentMeme = () => {
-  const { src } = getCurrentState();
-  const { caption } = getDerivedState();
-  return div({ className: "page" }, Meme({ ...caption, src }));
+  const { captions, index, src } = getCurrentState();
+  return div({ className: "page" }, Meme({ ...captions[index], src }));
 };

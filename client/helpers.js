@@ -11,6 +11,7 @@ export const getDerivedState = () => {
     canReveal: authors.length > 0 && citizens.every((n) => authors.includes(n)),
     caption: captions[index],
     hasCaption: topText.length > 0 || bottomText.length > 0,
+    hasCzar: czar !== "",
     hasNextCaption: index < captions.length - 1,
     hasPrevCaption: index > 0,
     isCzar: name === czar,

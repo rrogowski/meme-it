@@ -1,4 +1,5 @@
-import { getCurrentState, getDerivedState, setState } from "../state.js";
+import { getDerivedState } from "../helpers.js";
+import { getCurrentState, setState } from "../state.js";
 import { button, div, input } from "../ui.js";
 import { openWebSocket } from "../web-socket.js";
 

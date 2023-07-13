@@ -1,15 +1,14 @@
-import { actions } from "../actions.js";
 import { getDerivedState } from "../helpers.js";
-import { getCurrentState } from "../state.js";
+import { uploadImage } from "../http.js";
+import { getCurrentState, setState } from "../state.js";
 import { button, div, input, p } from "../ui.js";
 import { Meme } from "./meme.js";
 
 export const SelectImage = () => {
-  const { czar } = getCurrentState();
-  const { isCzar } = getDerivedState();
+  const { hasCzar, isCzar } = getDerivedState();
   if (isCzar) {
     return UploadImage();
-  } else if (czar) {
+  } else if (hasCzar) {
     return WaitingForUpload();
   } else {
     return WaitingForPlayers();
@@ -18,7 +17,6 @@ export const SelectImage = () => {
 
 const UploadImage = () => {
   const { preview } = getCurrentState();
-  const { openFileDialog, setPreview, uploadImage } = actions;
   return div(
     { className: "page" },
     input({ accept: "image/*", onchange: setPreview, type: "file" }),
@@ -38,4 +36,23 @@ const WaitingForPlayers = () => {
     { className: "page" },
     p(`Waiting for at least one player to join`)
   );
+};
+
+const openFileDialog = () => {
+  const fileInput = document.querySelector("input[type=file]");
+  const event = new window.MouseEvent("click");
+  fileInput.dispatchEvent(event);
+};
+
+const setPreview = (event) => {
+  const file = event.target.files[0];
+  if (!file) {
+    setState({ preview: "" });
+    return;
+  }
+  const reader = new window.FileReader();
+  reader.addEventListener("load", () => {
+    setState({ preview: reader.result });
+  });
+  reader.readAsDataURL(file);
 };

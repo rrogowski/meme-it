@@ -1,6 +1,6 @@
-import { actions } from "../actions.js";
 import { getDerivedState } from "../helpers.js";
-import { getCurrentState } from "../state.js";
+import { uploadCaption } from "../http.js";
+import { getCurrentState, setState } from "../state.js";
 import { button, div, input, p } from "../ui.js";
 import { Meme } from "./meme.js";
 
@@ -17,7 +17,6 @@ export const CaptionImage = () => {
 };
 
 const CaptionCounter = () => {
-  const { revealMemes } = actions;
   const { captions } = getCurrentState();
   const { canReveal } = getDerivedState();
   return div(
@@ -28,7 +27,6 @@ const CaptionCounter = () => {
 };
 
 const UploadCaption = () => {
-  const { setBottomText, setTopText, uploadCaption } = actions;
   const { bottomText, src, topText } = getCurrentState();
   const { hasCaption } = getDerivedState();
   return div(
@@ -52,4 +50,12 @@ const WaitingForCaptions = () => {
     p("Waiting for captions from:"),
     ...pendingAuthors.map(p)
   );
+};
+
+const setTopText = (event) => {
+  setState({ topText: event.target.value });
+};
+
+const setBottomText = (event) => {
+  setState({ topText: event.target.value });
 };
