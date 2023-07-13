@@ -1,8 +1,7 @@
-import { getCurrentState, setState } from "./state.js";
+import { setState } from "./state.js";
 
-export const openWebSocket = () => {
-  const { name } = getCurrentState();
-  const searchParams = new URLSearchParams({ name });
+export const openWebSocket = (options = {}) => {
+  const searchParams = new URLSearchParams(options);
   const url = `ws://${window.location.hostname}:8000/?${searchParams}`;
   const webSocket = new window.WebSocket(url);
   webSocket.addEventListener("message", handleMessage);
