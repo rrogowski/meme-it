@@ -7,6 +7,7 @@ export const getDerivedState = () => {
   const citizens = names.filter((n) => n !== czar);
   return {
     canCaption: citizens.includes(name) && !authors.includes(name),
+    canDecide: captions.every(({ wasViewed }) => wasViewed),
     canReveal: authors.length > 0 && citizens.every((n) => authors.includes(n)),
     caption: captions[index],
     hasCaption: topText.length > 0 || bottomText.length > 0,

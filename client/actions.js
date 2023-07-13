@@ -1,6 +1,6 @@
 import { post } from "./http.js";
 import { getArrayBufferFromDataURL, readFileAsDataURL } from "./file.js";
-import { dispatch, getCurrentState, state } from "./store.js";
+import { dispatch, getCurrentState } from "./store.js";
 import { initializeWebSocket } from "./web-socket.js";
 
 export const actions = {

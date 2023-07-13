@@ -5,12 +5,6 @@ let currentState = undefined;
 
 const onStateChange = createEmitter();
 
-export const state = {
-  get derived() {
-    return Object.freeze(getDerivedState(currentState));
-  },
-};
-
 export const dispatch = (action) => {
   console.debug("[ACTION]", action);
 
@@ -27,13 +21,4 @@ export const getCurrentState = () => {
 export const subscribe = (listener) => {
   onStateChange.addListener(listener);
   dispatch({ type: "STORE_INITIALIZED" });
-};
-
-const getDerivedState = (state) => {
-  return {
-    get canDecide() {
-      const { captions } = state;
-      return captions.every(({ wasViewed }) => wasViewed);
-    },
-  };
 };

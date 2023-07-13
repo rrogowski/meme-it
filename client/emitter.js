@@ -9,5 +9,5 @@ export const createEmitter = () => {
     listeners.forEach((listener) => listener());
   };
 
-  return { emit, addListener };
+  return { addListener, emit };
 };

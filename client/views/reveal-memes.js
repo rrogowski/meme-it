@@ -1,6 +1,6 @@
 import { actions } from "../actions.js";
 import { getDerivedState } from "../helpers.js";
-import { getCurrentState, state } from "../store.js";
+import { getCurrentState } from "../store.js";
 import { button, div } from "../ui.js";
 import { Meme } from "./meme.js";
 
@@ -15,8 +15,8 @@ export const RevealMemes = () => {
 
 const AllMemes = () => {
   const { src } = getCurrentState();
-  const { caption, hasNextCaption, hasPrevCaption } = getDerivedState();
-  const { canDecide } = state.derived;
+  const { canDecide, caption, hasNextCaption, hasPrevCaption } =
+    getDerivedState();
   const { decideWinner, goToNextCaption, goToPrevCaption } = actions;
   return div(
     { className: "page" },

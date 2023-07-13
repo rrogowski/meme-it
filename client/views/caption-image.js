@@ -1,6 +1,6 @@
 import { actions } from "../actions.js";
 import { getDerivedState } from "../helpers.js";
-import { getCurrentState, state } from "../store.js";
+import { getCurrentState } from "../store.js";
 import { button, div, input, p } from "../ui.js";
 import { Meme } from "./meme.js";
 
