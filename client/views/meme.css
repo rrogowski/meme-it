@@ -1,6 +1,7 @@
 .meme {
-  height: 100%;
-  width: 100%;
+  flex-grow: 1;
+  margin-bottom: 1rem;
+  overflow: hidden;
 }
 
 .meme .vertical-aligner {

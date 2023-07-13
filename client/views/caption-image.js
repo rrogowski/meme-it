@@ -32,7 +32,7 @@ const EnterCaption = () => {
   const { isCaptionInvalid } = state.derived;
   return div(
     { className: "caption-image page" },
-    div({ className: "preview" }, Meme({ bottomText, src, topText })),
+    Meme({ bottomText, src, topText }),
     input({ placeholder: "Top Text", oninput: setTopText }),
     input({ placeholder: "Bottom Text", oninput: setBottomText }),
     button({ disabled: isCaptionInvalid, onclick: uploadCaption }, "Upload")
