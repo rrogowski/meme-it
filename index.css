@@ -1,6 +1,14 @@
 @import "client/views/app.css";
 @import "client/views/caption-image.css";
-@import "client/views/main-menu.css";
 @import "client/views/meme.css";
 @import "client/views/reveal-memes.css";
 @import "client/views/select-image.css";
+
+.page {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  padding: 1rem;
+  padding-bottom: 0;
+  text-align: center;
+}

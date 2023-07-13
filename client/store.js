@@ -15,7 +15,7 @@ export const dispatch = (action) => {
   console.debug("[ACTION]", action);
 
   currentState = reduce(currentState, action);
-  console.debug("[CURRENT STATE]", getCurrentState());
+  console.debug("[CURRENT STATE]", currentState);
 
   onStateChange.emit();
 };
