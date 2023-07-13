@@ -1,26 +1,27 @@
-import { setState } from "./state.js";
+import { getCurrentState, setState } from "./state.js";
 
-export const initializeWebSocket = (options = {}) => {
-  const searchParams = new URLSearchParams(options);
+export const openWebSocket = () => {
+  const { name } = getCurrentState();
+  const searchParams = new URLSearchParams({ name });
   const url = `ws://${window.location.hostname}:8000/?${searchParams}`;
   const webSocket = new window.WebSocket(url);
-  webSocket.addEventListener("message", onMessage);
-  webSocket.addEventListener("close", onClose);
+  webSocket.addEventListener("message", handleMessage);
+  webSocket.addEventListener("close", closeConnection);
 };
 
-let body = "";
+let bodyStream = "";
 
-const onMessage = (event) => {
-  body += event.data;
-  const data = tryJsonParse(body);
-  if (data !== null) {
-    body = "";
-    setState(data);
+const handleMessage = (event) => {
+  bodyStream += event.data;
+  const updates = tryJsonParse(bodyStream);
+  if (updates !== null) {
+    bodyStream = "";
+    setState(updates);
   }
 };
 
-const onClose = () => {
-  body = "";
+const closeConnection = () => {
+  bodyStream = "";
   setState({ bottomText: "", phase: null, preview: "", topText: "" });
 };
 
