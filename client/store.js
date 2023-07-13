@@ -35,17 +35,5 @@ const getDerivedState = (state) => {
       const { captions } = state;
       return captions.every(({ wasViewed }) => wasViewed);
     },
-    get caption() {
-      const { captions, index } = state;
-      return captions[index];
-    },
-    get hasNextCaption() {
-      const { captions, index } = state;
-      return index < captions.length - 1;
-    },
-    get hasPrevCaption() {
-      const { index } = state;
-      return index > 0;
-    },
   };
 };
