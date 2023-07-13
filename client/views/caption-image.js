@@ -5,8 +5,8 @@ import { button, div, input, p } from "../ui.js";
 import { Meme } from "./meme.js";
 
 export const CaptionImage = () => {
-  const { isUploader } = getDerivedState();
-  const { canCaption, canReveal } = state.derived;
+  const { canCaption, isUploader } = getDerivedState();
+  const { canReveal } = state.derived;
   if (isUploader) {
     return CaptionCounter();
   } else if (canCaption) {

@@ -31,11 +31,6 @@ export const subscribe = (listener) => {
 
 const getDerivedState = (state) => {
   return {
-    get canCaption() {
-      const { captions, name, names } = state;
-      const authors = captions.map(({ author }) => author);
-      return names.includes(name) && !authors.includes(name);
-    },
     get canDecide() {
       const { captions } = state;
       return captions.every(({ wasViewed }) => wasViewed);
