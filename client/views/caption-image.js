@@ -30,13 +30,13 @@ const CaptionCounter = () => {
 const UploadCaption = () => {
   const { setBottomText, setTopText, uploadCaption } = actions;
   const { bottomText, src, topText } = getCurrentState();
-  const { isCaptionInvalid } = state.derived;
+  const { hasCaption } = getDerivedState();
   return div(
     { className: "page" },
     Meme({ bottomText, src, topText }),
     input({ placeholder: "Top Text", oninput: setTopText }),
     input({ placeholder: "Bottom Text", oninput: setBottomText }),
-    button({ disabled: isCaptionInvalid, onclick: uploadCaption }, "Upload")
+    button({ disabled: !hasCaption, onclick: uploadCaption }, "Upload Caption")
   );
 };
 
