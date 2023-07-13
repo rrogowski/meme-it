@@ -1,8 +1,3 @@
-.caption-image input,
-.caption-image button {
-  flex-shrink: 0;
-}
-
 .caption-image .preview {
   flex-grow: 1;
   margin-bottom: 1rem;

@@ -14,10 +14,12 @@ body {
 }
 
 button {
+  flex-shrink: 0;
   margin-bottom: 1rem;
 }
 
 input {
+  flex-shrink: 0;
   margin-bottom: 1rem;
 }
 
