@@ -1,4 +1,4 @@
-import { getCurrentState } from "./store.js";
+import { getCurrentState } from "./state.js";
 
 export const getDerivedState = () => {
   const state = { captions: [], players: [], ...getCurrentState() };

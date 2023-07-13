@@ -1,6 +1,6 @@
-import { post } from "./http.js";
 import { getArrayBufferFromDataURL, readFileAsDataURL } from "./file.js";
-import { dispatch, getCurrentState } from "./store.js";
+import { post } from "./http.js";
+import { getCurrentState, setState } from "./state.js";
 import { initializeWebSocket } from "./web-socket.js";
 
 export const actions = {
@@ -29,28 +29,23 @@ export const actions = {
     post("/reveal");
   },
   setBottomText(event) {
-    const payload = { bottomText: event.target.value };
-    dispatch({ type: "BOTTOM_TEXT_CHANGED", payload });
+    setState({ bottomText: event.target.value });
   },
   setName(event) {
-    const payload = { name: event.target.value };
-    dispatch({ type: "NAME_UPDATED", payload });
+    setState({ name: event.target.value });
   },
   setPreview(event) {
     const file = event.target.files[0];
     if (!file) {
-      const payload = { preview: "" };
-      dispatch({ type: "PREVIEW_UPDATED", payload });
+      setState({ preview: "" });
       return;
     }
     readFileAsDataURL(file, (result) => {
-      const payload = { preview: result };
-      dispatch({ type: "PREVIEW_UPDATED", payload });
+      setState({ preview: result });
     });
   },
   setTopText(event) {
-    const payload = { topText: event.target.value };
-    dispatch({ type: "TOP_TEXT_CHANGED", payload });
+    setState({ topText: event.target.value });
   },
   uploadCaption() {
     const { bottomText, name, topText } = getCurrentState();

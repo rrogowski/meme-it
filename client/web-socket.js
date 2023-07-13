@@ -1,4 +1,4 @@
-import { dispatch } from "./store.js";
+import { setState } from "./state.js";
 
 export const initializeWebSocket = (options = {}) => {
   const searchParams = new URLSearchParams(options);
@@ -15,13 +15,13 @@ const onMessage = (event) => {
   const data = tryJsonParse(body);
   if (data !== null) {
     body = "";
-    dispatch(data);
+    setState(data);
   }
 };
 
 const onClose = () => {
   body = "";
-  dispatch({ type: "WEB_SOCKET_CLOSED" });
+  setState({ bottomText: "", phase: null, preview: "", topText: "" });
 };
 
 const tryJsonParse = (body) => {

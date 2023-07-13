@@ -1,4 +1,4 @@
-import { getCurrentState } from "../store.js";
+import { getCurrentState } from "../state.js";
 import { CaptionImage } from "./caption-image.js";
 import { MainMenu } from "./main-menu.js";
 import { RevealMemes } from "./reveal-memes.js";

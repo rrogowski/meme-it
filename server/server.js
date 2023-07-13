@@ -9,7 +9,7 @@ const port = 8000;
 
 getLocalIpv4Address((address) => {
   const { state, onStateChange, setState } = createState();
-  onStateChange(() => broadcast({ type: "SERVER_SYNCED", payload: state }));
+  onStateChange(() => broadcast(state));
 
   const actions = createActions({ address, port, state, setState });
   onConnect(actions.addPlayer);
