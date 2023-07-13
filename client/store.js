@@ -32,10 +32,9 @@ export const subscribe = (listener) => {
 const getDerivedState = (state) => {
   return {
     get canCaption() {
-      const { captions, name } = state;
-      const { isHost } = this;
+      const { captions, name, names } = state;
       const authors = captions.map(({ author }) => author);
-      return !isHost && !authors.includes(name);
+      return names.includes(name) && !authors.includes(name);
     },
     get canDecide() {
       const { captions } = state;
@@ -63,10 +62,6 @@ const getDerivedState = (state) => {
     get isCaptionInvalid() {
       const { bottomText, topText } = state;
       return !bottomText && !topText;
-    },
-    get isHost() {
-      const { name } = state;
-      return !name;
     },
     get isUploader() {
       const { name, uploader } = state;
