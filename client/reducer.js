@@ -1,4 +1,4 @@
-const INITIAL_STATE = { name: "", preview: "" };
+const INITIAL_STATE = { bottomText: "", name: "", preview: "", topText: "" };
 
 export const reduce = (state = INITIAL_STATE, action) => {
   switch (action.type) {
