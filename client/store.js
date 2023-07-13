@@ -1,9 +1,9 @@
 import { createEmitter } from "./emitter.js";
 import { reduce } from "./reducer.js";
 
-let currentState;
+let currentState = undefined;
 
-const emitter = createEmitter();
+const onStateChange = createEmitter();
 
 export const state = {
   get current() {
@@ -18,14 +18,17 @@ export const dispatch = (action) => {
   console.debug("[ACTION]", action);
 
   currentState = reduce(currentState, action);
-  console.debug("[CURRENT STATE]", state.current);
-  console.debug("[DERIVED STATE]", state.derived);
+  console.debug("[CURRENT STATE]", getCurrentState());
 
-  emitter.emit(state.current);
+  onStateChange.emit();
 };
 
-export const initialize = (listener) => {
-  emitter.subscribe(listener);
+export const getCurrentState = () => {
+  return Object.freeze({ ...currentState });
+};
+
+export const subscribe = (listener) => {
+  onStateChange.addListener(listener);
   dispatch({ type: "STORE_INITIALIZED" });
 };
 

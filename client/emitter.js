@@ -1,13 +1,13 @@
 export const createEmitter = () => {
   const listeners = [];
 
-  const emit = (data) => {
-    listeners.forEach((listener) => listener(data));
-  };
-
-  const subscribe = (listener) => {
+  const addListener = (listener) => {
     listeners.push(listener);
   };
 
-  return { emit, subscribe };
+  const emit = () => {
+    listeners.forEach((listener) => listener());
+  };
+
+  return { emit, addListener };
 };

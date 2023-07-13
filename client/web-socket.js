@@ -21,7 +21,7 @@ const onMessage = (event) => {
 
 const onClose = () => {
   body = "";
-  dispatch({ type: "WEB_SOCKET_DISCONNECTED" });
+  dispatch({ type: "WEB_SOCKET_CLOSED" });
 };
 
 const tryJsonParse = (body) => {
