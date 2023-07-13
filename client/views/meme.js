@@ -1,4 +1,4 @@
-import { div, img, p } from "../lib/ui.js";
+import { div, img, p } from "../ui.js";
 
 // HACK: As far as I can tell, there is NOT a straightforward way to fit an
 // arbitrarily sized image to an arbitrarily sized container WITHOUT losing

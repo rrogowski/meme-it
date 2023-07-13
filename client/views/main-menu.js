@@ -1,5 +1,5 @@
 import { actions } from "../actions.js";
-import { button, div, input } from "../lib/ui.js";
+import { button, div, input } from "../ui.js";
 import { state } from "../store.js";
 
 export const MainMenu = () => {

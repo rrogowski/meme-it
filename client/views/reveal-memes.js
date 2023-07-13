@@ -1,5 +1,5 @@
 import { actions } from "../actions.js";
-import { button, div } from "../lib/ui.js";
+import { button, div } from "../ui.js";
 import { state } from "../store.js";
 import { Meme } from "./meme.js";
 
