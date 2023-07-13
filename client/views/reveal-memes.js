@@ -27,5 +27,5 @@ const AllMemes = () => {
 const CurrentMeme = () => {
   const { src } = getCurrentState();
   const { caption } = state.derived;
-  return div({ className: "reveal-memes page" }, Meme({ ...caption, src }));
+  return div({ className: "page" }, Meme({ ...caption, src }));
 };
