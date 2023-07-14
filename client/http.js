@@ -4,16 +4,12 @@ export const decideWinner = () => {
   post("/decide");
 };
 
-export const goToNextCaption = () => {
-  post("/next");
-};
-
-export const goToPrevCaption = () => {
-  post("/prev");
-};
-
 export const revealMemes = () => {
   post("/reveal");
+};
+
+export const setIndex = (index) => {
+  post("/index", JSON.stringify(index));
 };
 
 export const uploadCaption = async (caption) => {

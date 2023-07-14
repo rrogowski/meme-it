@@ -4,15 +4,18 @@ import { button, div, input, p } from "../ui.js";
 import { Meme } from "./meme.js";
 
 export const CaptionImage = () => {
-  const { canCaption, canReveal, isCzar } = getDerivedState();
+  const { canCaption, canReveal, hasCitizens, isCzar } = getDerivedState();
   if (isCzar) {
     return CaptionCounter();
   } else if (canCaption) {
     return UploadCaption();
   } else if (canReveal) {
     return WaitingForReveal();
+  } else if (hasCitizens) {
+    return WaitingForCaptions();
+  } else {
+    return WaitingForCitizens();
   }
-  return WaitingForCaptions();
 };
 
 const CaptionCounter = () => {
@@ -51,6 +54,13 @@ const WaitingForCaptions = () => {
   );
 };
 
+const WaitingForCitizens = () => {
+  return div(
+    { className: "page" },
+    p(`Waiting for at least one citizen to join`)
+  );
+};
+
 const getDerivedState = () => {
   const { bottomText, captions, czar, name, players, topText } = getState();
   const authors = captions.map(({ author }) => author);
@@ -59,6 +69,7 @@ const getDerivedState = () => {
     canCaption: citizens.includes(name) && !authors.includes(name),
     canReveal: citizens.every((n) => authors.includes(n)) && authors.length > 0,
     hasCaption: topText.length > 0 || bottomText.length > 0,
+    hasCitizens: citizens.length > 0,
     isCzar: name === czar,
     pendingAuthors: citizens.filter((n) => !authors.includes(n)),
   };

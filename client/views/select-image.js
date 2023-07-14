@@ -11,7 +11,7 @@ export const SelectImage = () => {
   } else if (hasCzar) {
     return WaitingForUpload();
   } else {
-    return WaitingForPlayers();
+    return WaitingForCzar();
   }
 };
 
@@ -31,16 +31,16 @@ const WaitingForUpload = () => {
   return div({ className: "page" }, p(`Waiting for ${czar} to upload image`));
 };
 
-const WaitingForPlayers = () => {
+const WaitingForCzar = () => {
   return div(
     { className: "page" },
-    p(`Waiting for at least one player to join`)
+    p(`Waiting for someone to claim the throne as czar`)
   );
 };
 
 const getDerivedState = () => {
   const { czar, name } = getState();
-  return { hasCzar: czar !== "", isCzar: name === czar };
+  return { hasCzar: czar !== null, isCzar: name === czar };
 };
 
 const chooseFile = () => {

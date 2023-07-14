@@ -1,4 +1,4 @@
-import { decideWinner, goToNextCaption, goToPrevCaption } from "../http.js";
+import { decideWinner, setIndex } from "../http.js";
 import { getState } from "../store.js";
 import { button, div } from "../ui.js";
 import { Meme } from "./meme.js";
@@ -14,10 +14,10 @@ export const RevealMemes = () => {
 
 const AllMemes = () => {
   const { captions, index, src } = getState();
-  const { canVote, hasNextCaption, hasPrevCaption } = getDerivedState();
+  const { canDecide, hasNextCaption, hasPrevCaption } = getDerivedState();
   return div(
     { className: "page" },
-    button({ disabled: !canVote, onclick: decideWinner }, "Start New Round"),
+    button({ disabled: !canDecide, onclick: decideWinner }, "Start New Round"),
     Meme({ ...captions[index], src }),
     div(
       { className: "button-group" },
@@ -33,11 +33,21 @@ const CurrentMeme = () => {
 };
 
 const getDerivedState = () => {
-  const { captions, czar, index, name } = getState();
+  const { captions, czar, index, name, revealed } = getState();
   return {
-    canVote: captions.every(({ wasViewed }) => wasViewed),
+    canDecide: revealed === captions.length,
     hasNextCaption: index < captions.length - 1,
     hasPrevCaption: index > 0,
     isCzar: name === czar,
   };
+};
+
+const goToNextCaption = () => {
+  const { index } = getState();
+  setIndex(index + 1);
+};
+
+const goToPrevCaption = () => {
+  const { index } = getState();
+  setIndex(index - 1);
 };

@@ -1,5 +1,6 @@
 import { createHash } from "crypto";
 import { URL } from "url";
+import { dispatch, getState } from "./store.js";
 
 const END_OF_HTTP_RESPONSE = "\n\n";
 const WEB_SOCKET_FIN_FLAG = 0x80;
@@ -8,13 +9,7 @@ const WEB_SOCKET_OPT_CODE_TEXT = 0x01;
 
 const sockets = [];
 
-let onConnectCallback;
-let onDisconnectCallback;
-
-export const upgrade = (request, socket) => {
-  const userAgent = request.headers["user-agent"];
-  console.debug(`Accepting upgrade from: ${userAgent}`);
-
+export const acceptWebSocketUpgrade = (request, socket) => {
   const response = generateAcceptanceResponse(request);
   socket.write(response);
   sockets.push(socket);
@@ -22,7 +17,11 @@ export const upgrade = (request, socket) => {
   const url = new URL(request.url, `ws://${request.headers.host}`);
   const name = url.searchParams.get("name");
   const isHost = name === null;
-  onConnectCallback({ isHost, name });
+  if (isHost) {
+    dispatch({ type: "HOST_CONNECTED" });
+  } else {
+    dispatch({ type: "PLAYER_CONNECTED", payload: name });
+  }
 
   socket.on("readable", () => {
     // HACK: Even though the client is not sending data through the socket, there
@@ -32,26 +31,22 @@ export const upgrade = (request, socket) => {
   });
   socket.on("error", (error) => {
     console.error(error);
-    sockets.splice(sockets.indexOf(socket), 1);
-    onDisconnectCallback({ isHost, name });
+    socket.emit("end");
   });
   socket.on("end", () => {
     sockets.splice(sockets.indexOf(socket), 1);
-    onDisconnectCallback({ isHost, name });
+    if (isHost) {
+      dispatch({ type: "HOST_DISCONNECTED" });
+    } else {
+      dispatch({ type: "PLAYER_DISCONNECTED", payload: name });
+    }
   });
 };
 
-export const onConnect = (callback) => {
-  onConnectCallback = callback;
-};
-
-export const onDisconnect = (callback) => {
-  onDisconnectCallback = callback;
-};
-
-export const broadcast = (data) => {
+export const broadcastState = () => {
+  const state = getState();
   sockets.forEach((socket) => {
-    let frame = JSON.stringify(data);
+    let frame = JSON.stringify(state);
     while (frame.length > 0) {
       sendTextFrame(socket, frame.slice(0, 125));
       frame = frame.slice(125);
