@@ -14,7 +14,7 @@ export const CaptionImage = () => {
   } else if (hasCitizens) {
     return WaitingForCaptions();
   } else {
-    return WaitingForCitizens();
+    return WaitingForPlayers();
   }
 };
 
@@ -54,10 +54,10 @@ const WaitingForCaptions = () => {
   );
 };
 
-const WaitingForCitizens = () => {
+const WaitingForPlayers = () => {
   return div(
     { className: "page" },
-    p(`Waiting for at least one citizen to join`)
+    p(`Waiting for at least one more player to join`)
   );
 };
 

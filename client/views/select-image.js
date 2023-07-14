@@ -11,7 +11,7 @@ export const SelectImage = () => {
   } else if (hasCzar) {
     return WaitingForUpload();
   } else {
-    return WaitingForCzar();
+    return WaitingForPlayers();
   }
 };
 
@@ -31,10 +31,10 @@ const WaitingForUpload = () => {
   return div({ className: "page" }, p(`Waiting for ${czar} to upload image`));
 };
 
-const WaitingForCzar = () => {
+const WaitingForPlayers = () => {
   return div(
     { className: "page" },
-    p(`Waiting for someone to claim the throne as czar`)
+    p(`Waiting for at least one more player to join`)
   );
 };
 
