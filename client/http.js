@@ -1,38 +1,35 @@
-import { setState } from "./state.js";
+import { dispatch } from "./store.js";
 
-export const openWebSocket = (options = {}) => {
-  const searchParams = new URLSearchParams(options);
-  const url = `ws://${window.location.hostname}:8000/?${searchParams}`;
-  const webSocket = new window.WebSocket(url);
-  webSocket.addEventListener("message", processMessage);
-  webSocket.addEventListener("close", closeConnection);
+export const decideWinner = () => {
+  post("/decide");
 };
 
-export const post = (endpoint, body) => {
+export const goToNextCaption = () => {
+  post("/next");
+};
+
+export const goToPrevCaption = () => {
+  post("/prev");
+};
+
+export const revealMemes = () => {
+  post("/reveal");
+};
+
+export const uploadCaption = async (caption) => {
+  await post("/caption", JSON.stringify(caption));
+  dispatch({ type: "SET_TOP_TEXT", payload: "" });
+  dispatch({ type: "SET_BOTTOM_TEXT", payload: "" });
+};
+
+export const uploadImage = async (preview) => {
+  const response = await fetch(preview);
+  const arrayBuffer = await response.arrayBuffer();
+  await post("/upload", arrayBuffer);
+  dispatch({ type: "SET_PREVIEW", payload: "" });
+};
+
+const post = (endpoint, body) => {
   const url = `http://${window.location.hostname}:8000`.concat(endpoint);
   return fetch(url, { body, method: "POST" });
-};
-
-let bodyStream = "";
-
-const processMessage = (event) => {
-  bodyStream += event.data;
-  const updates = tryJsonParse(bodyStream);
-  if (updates !== null) {
-    bodyStream = "";
-    setState(updates);
-  }
-};
-
-const closeConnection = () => {
-  bodyStream = "";
-  setState({ bottomText: "", phase: null, preview: "", topText: "" });
-};
-
-const tryJsonParse = (body) => {
-  try {
-    return JSON.parse(body);
-  } catch {
-    return null;
-  }
 };

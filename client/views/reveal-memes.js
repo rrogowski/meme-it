@@ -1,5 +1,5 @@
-import { post } from "../http.js";
-import { getState } from "../state.js";
+import { decideWinner, goToNextCaption, goToPrevCaption } from "../http.js";
+import { getState } from "../store.js";
 import { button, div } from "../ui.js";
 import { Meme } from "./meme.js";
 
@@ -15,7 +15,6 @@ export const RevealMemes = () => {
 const AllMemes = () => {
   const { captions, index, src } = getState();
   const { canVote, hasNextCaption, hasPrevCaption } = getDerivedState();
-  const { decideWinner, goToNextCaption, goToPrevCaption } = getActions();
   return div(
     { className: "page" },
     button({ disabled: !canVote, onclick: decideWinner }, "Start New Round"),
@@ -41,20 +40,4 @@ const getDerivedState = () => {
     hasPrevCaption: index > 0,
     isCzar: name === czar,
   };
-};
-
-const getActions = () => {
-  const decideWinner = () => {
-    post("/winner");
-  };
-
-  const goToNextCaption = () => {
-    post("/next");
-  };
-
-  const goToPrevCaption = () => {
-    post("/prev");
-  };
-
-  return { decideWinner, goToNextCaption, goToPrevCaption };
 };

@@ -52,7 +52,7 @@ export const createEndpoints = ({ actions }) => {
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.end();
         break;
-      case "/winner":
+      case "/decide":
         actions.startNewRound();
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.end();

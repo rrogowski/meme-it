@@ -1,11 +1,10 @@
-import { openWebSocket } from "../http.js";
-import { getState, setState } from "../state.js";
+import { dispatch, getState } from "../store.js";
 import { button, div, input } from "../ui.js";
+import { openWebSocket } from "../web-socket.js";
 
 export const MainMenu = () => {
   const { name } = getState();
   const { isHost } = getDerivedState();
-  const { joinAsHost, joinAsPlayer, setName } = getActions();
   return div(
     { className: "page" },
     input({ placeholder: "name", value: name, oninput: setName }),
@@ -19,19 +18,15 @@ const getDerivedState = () => {
   return { isHost: name === "" };
 };
 
-const getActions = () => {
-  const joinAsHost = () => {
-    openWebSocket();
-  };
+const joinAsHost = () => {
+  openWebSocket({});
+};
 
-  const joinAsPlayer = () => {
-    const { name } = getState();
-    openWebSocket({ name });
-  };
+const joinAsPlayer = () => {
+  const { name } = getState();
+  openWebSocket({ name });
+};
 
-  const setName = (event) => {
-    setState({ name: event.target.value });
-  };
-
-  return { joinAsHost, joinAsPlayer, setName };
+const setName = (event) => {
+  dispatch({ type: "SET_NAME", payload: event.target.value });
 };
