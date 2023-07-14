@@ -1,6 +1,6 @@
-import { uploadImage } from "../http.js";
 import { getCurrentState, setState } from "../state.js";
 import { button, div, input, p } from "../ui.js";
+import { post } from "../web-socket.js";
 import { Meme } from "./meme.js";
 
 export const SelectImage = () => {
@@ -16,6 +16,7 @@ export const SelectImage = () => {
 
 const UploadImage = () => {
   const { preview } = getCurrentState();
+  const { openFileDialog, setPreview, uploadImage } = getActions();
   return div(
     { className: "page" },
     input({ accept: "image/*", onchange: setPreview, type: "file" }),
@@ -37,23 +38,33 @@ const WaitingForPlayers = () => {
   );
 };
 
-const openFileDialog = () => {
-  const fileInput = document.querySelector("input[type=file]");
-  const event = new window.MouseEvent("click");
-  fileInput.dispatchEvent(event);
-};
+const getActions = () => {
+  const openFileDialog = () => {
+    const fileInput = document.querySelector("input[type=file]");
+    const event = new window.MouseEvent("click");
+    fileInput.dispatchEvent(event);
+  };
 
-const setPreview = (event) => {
-  const file = event.target.files[0];
-  if (!file) {
-    setState({ preview: "" });
-    return;
-  }
-  const reader = new window.FileReader();
-  reader.addEventListener("load", () => {
-    setState({ preview: reader.result });
-  });
-  reader.readAsDataURL(file);
+  const setPreview = (event) => {
+    const file = event.target.files[0];
+    if (!file) {
+      setState({ preview: "" });
+      return;
+    }
+    const reader = new window.FileReader();
+    reader.addEventListener("load", () => setState({ preview: reader.result }));
+    reader.readAsDataURL(file);
+  };
+
+  const uploadImage = () => {
+    const { preview } = getCurrentState();
+    fetch(preview)
+      .then((response) => response.arrayBuffer())
+      .then((buffer) => post("/upload", buffer))
+      .then(() => setState({ preview: "" }));
+  };
+
+  return { openFileDialog, setPreview, uploadImage };
 };
 
 const getDerivedState = () => {
