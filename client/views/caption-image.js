@@ -1,5 +1,5 @@
-import { revealMemes, uploadCaption } from "../http.js";
-import { getCurrentState, setState } from "../state.js";
+import { post } from "../http.js";
+import { getState, setState } from "../state.js";
 import { button, div, input, p } from "../ui.js";
 import { Meme } from "./meme.js";
 
@@ -16,8 +16,9 @@ export const CaptionImage = () => {
 };
 
 const CaptionCounter = () => {
-  const { captions } = getCurrentState();
+  const { captions } = getState();
   const { canReveal } = getDerivedState();
+  const { revealMemes } = getActions();
   return div(
     { className: "page" },
     p(`Received ${captions.length} caption(s)`),
@@ -26,8 +27,9 @@ const CaptionCounter = () => {
 };
 
 const UploadCaption = () => {
-  const { bottomText, src, topText } = getCurrentState();
+  const { bottomText, src, topText } = getState();
   const { hasCaption } = getDerivedState();
+  const { setBottomText, setTopText, uploadCaption } = getActions();
   return div(
     { className: "page" },
     Meme({ bottomText, src, topText }),
@@ -38,7 +40,7 @@ const UploadCaption = () => {
 };
 
 const WaitingForReveal = () => {
-  const { czar } = getCurrentState();
+  const { czar } = getState();
   return div({ className: "page" }, p(`Waiting for ${czar} to reveal memes`));
 };
 
@@ -51,17 +53,8 @@ const WaitingForCaptions = () => {
   );
 };
 
-const setTopText = (event) => {
-  setState({ topText: event.target.value });
-};
-
-const setBottomText = (event) => {
-  setState({ topText: event.target.value });
-};
-
 const getDerivedState = () => {
-  const { bottomText, captions, czar, name, players, topText } =
-    getCurrentState();
+  const { bottomText, captions, czar, name, players, topText } = getState();
   const authors = captions.map(({ author }) => author);
   const citizens = players.filter((player) => player !== czar);
   return {
@@ -71,4 +64,28 @@ const getDerivedState = () => {
     isCzar: name === czar,
     pendingAuthors: citizens.filter((n) => !authors.includes(n)),
   };
+};
+
+const getActions = () => {
+  const revealMemes = () => {
+    post("/reveal");
+  };
+
+  const setBottomText = (event) => {
+    setState({ topText: event.target.value });
+  };
+
+  const setTopText = (event) => {
+    setState({ topText: event.target.value });
+  };
+
+  const uploadCaption = () => {
+    const { bottomText, name, topText } = getState();
+    const caption = { author: name, bottomText, topText };
+    post("/caption", JSON.stringify(caption)).then(() => {
+      setState({ bottomText: "", topText: "" });
+    });
+  };
+
+  return { revealMemes, setBottomText, setTopText, uploadCaption };
 };

@@ -1,11 +1,11 @@
-import { getCurrentState } from "../state.js";
+import { getState } from "../state.js";
 import { CaptionImage } from "./caption-image.js";
 import { MainMenu } from "./main-menu.js";
 import { RevealMemes } from "./reveal-memes.js";
 import { SelectImage } from "./select-image.js";
 
 export const App = () => {
-  const { phase } = getCurrentState();
+  const { phase } = getState();
   switch (phase) {
     case "SELECT_IMAGE":
       return SelectImage();

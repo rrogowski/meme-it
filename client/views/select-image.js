@@ -1,6 +1,6 @@
-import { getCurrentState, setState } from "../state.js";
+import { post } from "../http.js";
+import { getState, setState } from "../state.js";
 import { button, div, input, p } from "../ui.js";
-import { post } from "../web-socket.js";
 import { Meme } from "./meme.js";
 
 export const SelectImage = () => {
@@ -15,7 +15,7 @@ export const SelectImage = () => {
 };
 
 const UploadImage = () => {
-  const { preview } = getCurrentState();
+  const { preview } = getState();
   const { openFileDialog, setPreview, uploadImage } = getActions();
   return div(
     { className: "page" },
@@ -27,7 +27,7 @@ const UploadImage = () => {
 };
 
 const WaitingForUpload = () => {
-  const { czar } = getCurrentState();
+  const { czar } = getState();
   return div({ className: "page" }, p(`Waiting for ${czar} to upload image`));
 };
 
@@ -57,7 +57,7 @@ const getActions = () => {
   };
 
   const uploadImage = () => {
-    const { preview } = getCurrentState();
+    const { preview } = getState();
     fetch(preview)
       .then((response) => response.arrayBuffer())
       .then((buffer) => post("/upload", buffer))
@@ -68,6 +68,6 @@ const getActions = () => {
 };
 
 const getDerivedState = () => {
-  const { czar, name } = getCurrentState();
+  const { czar, name } = getState();
   return { hasCzar: czar !== "", isCzar: name === czar };
 };

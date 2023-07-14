@@ -1,13 +1,13 @@
-let currentState = { bottomText: "", name: "", preview: "", topText: "" };
+let state = { bottomText: "", name: "", preview: "", topText: "" };
 
 const listeners = [];
 
-export const getCurrentState = () => {
-  return Object.freeze({ ...currentState });
+export const getState = () => {
+  return Object.freeze({ ...state });
 };
 
 export const setState = (updates) => {
-  currentState = { ...currentState, ...updates };
+  state = { ...state, ...updates };
   listeners.forEach((listener) => listener());
 };
 
