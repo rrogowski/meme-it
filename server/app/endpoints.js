@@ -4,23 +4,9 @@ let imageNumber = 0;
 export const createEndpoints = ({ actions }) => {
   return (request, response) => {
     switch (request.url) {
-      case "/upload":
-        imageNumber++;
-        let chunks = [];
-        request.on("data", (chunk) => {
-          chunks.push(chunk);
-        });
-        request.on("end", () => {
-          image = Buffer.concat(chunks);
-          actions.uploadImage(imageNumber);
-          response.setHeader("Access-Control-Allow-Origin", "*");
-          response.end();
-        });
-        break;
-      case `/image/${imageNumber}`:
+      case "/decide":
+        actions.startNewRound();
         response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Content-Type", "image/png");
-        response.write(image);
         response.end();
         break;
       case "/caption": {
@@ -37,6 +23,12 @@ export const createEndpoints = ({ actions }) => {
         });
         break;
       }
+      case `/image/${imageNumber}`:
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Content-Type", "image/png");
+        response.write(image);
+        response.end();
+        break;
       case "/next":
         actions.goToNextCaption();
         response.setHeader("Access-Control-Allow-Origin", "*");
@@ -52,10 +44,18 @@ export const createEndpoints = ({ actions }) => {
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.end();
         break;
-      case "/decide":
-        actions.startNewRound();
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.end();
+      case "/upload":
+        imageNumber++;
+        let chunks = [];
+        request.on("data", (chunk) => {
+          chunks.push(chunk);
+        });
+        request.on("end", () => {
+          image = Buffer.concat(chunks);
+          actions.uploadImage(imageNumber);
+          response.setHeader("Access-Control-Allow-Origin", "*");
+          response.end();
+        });
         break;
     }
   };
