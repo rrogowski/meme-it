@@ -26,6 +26,6 @@ export const uploadImage = async (preview) => {
 };
 
 const post = (endpoint, body) => {
-  const url = `http://${window.location.hostname}:8000`.concat(endpoint);
+  const url = `http://${window.location.hostname}:9000`.concat(endpoint);
   return fetch(url, { body, method: "POST" });
 };

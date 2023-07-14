@@ -1,16 +1,17 @@
-import { lookup } from "dns";
-import { hostname } from "os";
+import { networkInterfaces } from "node:os";
 
 export const getLocalIpv4Address = () => {
-  return new Promise((resolve, reject) => {
-    const osHost = hostname();
-    lookup(osHost, { family: "IPv4" }, (error, address) => {
-      if (error === null) {
-        resolve(address);
-        return;
-      }
-      console.error(error);
-      reject(error);
-    });
+  const interfaces = Object.values(networkInterfaces()).flat();
+  const localIpv4Interface = interfaces.find(({ family, internal }) => {
+    return family === "IPv4" && internal;
   });
+  return localIpv4Interface?.address ?? "[UNKNOWN]";
+};
+
+export const getNetworkIpv4Address = () => {
+  const interfaces = Object.values(networkInterfaces()).flat();
+  const networkIpv4Interface = interfaces.find(({ family, internal }) => {
+    return family === "IPv4" && !internal;
+  });
+  return networkIpv4Interface?.address ?? "[UNKNOWN]";
 };

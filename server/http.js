@@ -1,5 +1,5 @@
 import { createServer } from "http";
-import { getLocalIpv4Address } from "./ipv4.js";
+import { getNetworkIpv4Address } from "./ipv4.js";
 import { acceptWebSocketUpgrade } from "./socket.js";
 import { dispatch } from "./store.js";
 
@@ -40,9 +40,8 @@ server.on("request", async (request, response) => {
     case "/upload":
       imageNumber++;
       lastImage = await parseRequestData(request);
-      const localIpv4Address = await getLocalIpv4Address();
       const { port } = server.address();
-      const src = `http://${localIpv4Address}:${port}/image/${imageNumber}`;
+      const src = `http://${getNetworkIpv4Address()}:${port}/image/${imageNumber}`;
       dispatch({ type: "UPLOAD_IMAGE", payload: src });
       response.end();
       break;

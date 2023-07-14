@@ -1,5 +1,5 @@
-import { createHash } from "crypto";
-import { URL } from "url";
+import { createHash } from "node:crypto";
+import { URL } from "node:url";
 import { dispatch, getState } from "./store.js";
 
 const END_OF_HTTP_RESPONSE = "\n\n";

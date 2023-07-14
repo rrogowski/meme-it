@@ -4,7 +4,7 @@ let stream = "";
 
 export const initializeWebSocket = (options = {}) => {
   const searchParams = new URLSearchParams(options);
-  const url = `ws://${window.location.hostname}:8000/?${searchParams}`;
+  const url = `ws://${window.location.hostname}:9000/?${searchParams}`;
   const socket = new WebSocket(url);
   socket.addEventListener("message", onMessage);
   socket.addEventListener("close", onClose);
