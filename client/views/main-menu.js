@@ -1,6 +1,6 @@
+import { initializeWebSocket } from "../socket.js";
 import { dispatch, getState } from "../store.js";
 import { button, div, input } from "../ui.js";
-import { openWebSocket } from "../web-socket.js";
 
 export const MainMenu = () => {
   const { name } = getState();
@@ -19,12 +19,12 @@ const getDerivedState = () => {
 };
 
 const joinAsHost = () => {
-  openWebSocket({});
+  initializeWebSocket();
 };
 
 const joinAsPlayer = () => {
   const { name } = getState();
-  openWebSocket({ name });
+  initializeWebSocket({ name });
 };
 
 const setName = (event) => {

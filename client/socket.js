@@ -2,7 +2,7 @@ import { dispatch } from "./store.js";
 
 let stream = "";
 
-export const openWebSocket = (options) => {
+export const initializeWebSocket = (options = {}) => {
   const searchParams = new URLSearchParams(options);
   const url = `ws://${window.location.hostname}:8000/?${searchParams}`;
   const socket = new WebSocket(url);
