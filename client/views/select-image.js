@@ -20,7 +20,7 @@ const UploadImage = () => {
   return div(
     { className: "page" },
     input({ accept: "image/*", onchange: openFile, type: "file" }),
-    button({ onclick: chooseFile }, "Choose File"),
+    button({ onclick: selectImage }, "Select Image"),
     Meme({ src: preview }),
     button({ disabled: !preview, onclick: submitImage }, "Submit Image")
   );
@@ -43,7 +43,7 @@ const getDerivedState = () => {
   return { hasCzar: czar !== null, isCzar: name === czar };
 };
 
-const chooseFile = () => {
+const selectImage = () => {
   openFileDialog();
 };
 
