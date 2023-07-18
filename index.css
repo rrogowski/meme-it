@@ -37,6 +37,7 @@ p {
 }
 
 .page {
+  container-type: size;
   display: flex;
   height: 100dvh;
   flex-direction: column;
@@ -68,6 +69,16 @@ p {
   padding: 0 1cqw;
   text-shadow: 1px 1px 3px black;
   text-transform: uppercase;
+}
+
+.gallery {
+  display: grid;
+  gap: 1cqw;
+  grid-auto-rows: auto;
+  /* HACK: The `gap` property does not support box-sizing. */
+  /* Using 25cqw will NOT allow four memes to fit on one row. */
+  grid-template-columns: repeat(auto-fit, minmax(24cqw, 1fr));
+  height: 100%;
 }
 
 .meme {

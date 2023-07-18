@@ -3,7 +3,7 @@ import { getState } from "../store.js";
 import { button, div } from "../ui.js";
 import { Meme } from "./meme.js";
 
-export const RevealMemes = () => {
+export const CzarRevealMemes = () => {
   const { captions, index, src } = getState();
   const { canDecide, hasNext, hasPrev } = getDerivedState();
   return div(
