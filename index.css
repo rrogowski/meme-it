@@ -2,6 +2,7 @@
   box-sizing: border-box;
   font-size: inherit;
   margin: 0;
+  user-select: none;
 }
 
 html {
@@ -29,7 +30,10 @@ input[type="file"] {
 }
 
 p {
+  color: white;
   margin-bottom: 1rem;
+  text-shadow: 1px 1px 3px black;
+  word-break: break-word;
 }
 
 .page {
@@ -64,7 +68,6 @@ p {
   padding: 0 1cqw;
   text-shadow: 1px 1px 3px black;
   text-transform: uppercase;
-  user-select: none;
 }
 
 .meme {
@@ -134,12 +137,12 @@ p {
   color: white;
   font-family: Impact;
   font-size: 10cqh;
+  margin: 0;
   padding: 0 1cqw;
   position: absolute;
   text-align: center;
   text-shadow: 1px 1px 3px black;
   text-transform: uppercase;
-  user-select: none;
   width: 100%;
   word-break: break-word;
 }
