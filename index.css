@@ -73,12 +73,14 @@ p {
 
 .gallery {
   display: grid;
+  flex-grow: 1;
   gap: 1cqw;
   grid-auto-rows: auto;
   /* HACK: The `gap` property does not support box-sizing. */
   /* Using 25cqw will NOT allow four memes to fit on one row. */
   grid-template-columns: repeat(auto-fit, minmax(24cqw, 1fr));
   height: 100%;
+  overflow: hidden;
 }
 
 .scroll-gallery {
