@@ -81,6 +81,21 @@ p {
   height: 100%;
 }
 
+.scroll-gallery {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  height: 100%;
+  overflow-x: scroll;
+}
+
+.scroll-gallery .option {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 80%;
+  height: 80%;
+}
+
 .meme {
   flex-grow: 1;
   margin-bottom: 1rem;
