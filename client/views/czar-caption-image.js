@@ -2,7 +2,7 @@ import { revealMemes } from "../http.js";
 import { getState } from "../store.js";
 import { button, div, p } from "../ui.js";
 
-export const CaptionImage = () => {
+export const CzarCaptionImage = () => {
   const { captions } = getState();
   const { canReveal } = getDerivedState();
   return div(
