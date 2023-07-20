@@ -11,10 +11,6 @@ server.on("upgrade", acceptWebSocketUpgrade);
 server.on("request", async (request, response) => {
   response.setHeader("Access-Control-Allow-Origin", "*");
   switch (request.url) {
-    case "/decide":
-      dispatch({ type: "DECIDE_WINNER" });
-      response.end();
-      break;
     case "/caption": {
       const buffer = await parseRequestData(request);
       const data = buffer.toString();
@@ -27,10 +23,8 @@ server.on("request", async (request, response) => {
       response.write(lastImage);
       response.end();
       break;
-    case "/index":
-      const buffer = await parseRequestData(request);
-      const index = Number(buffer.toString());
-      dispatch({ type: "SET_INDEX", payload: index });
+    case "/new_round":
+      dispatch({ type: "START_NEW_ROUND" });
       response.end();
       break;
     case "/reveal":
@@ -43,6 +37,12 @@ server.on("request", async (request, response) => {
       const { port } = server.address();
       const src = `http://${getNetworkIpv4Address()}:${port}/image/${imageNumber}`;
       dispatch({ type: "UPLOAD_IMAGE", payload: src });
+      response.end();
+      break;
+    case "/winner":
+      const buffer = await parseRequestData(request);
+      const author = buffer.toString();
+      dispatch({ type: "SELECT_WINNER", payload: author });
       response.end();
       break;
     default:

@@ -1,15 +1,15 @@
 import { dispatch } from "./store.js";
 
-export const decideWinner = () => {
-  post("/decide");
-};
-
 export const revealMemes = () => {
   post("/reveal");
 };
 
-export const setIndex = (index) => {
-  post("/index", JSON.stringify(index));
+export const startNewRound = () => {
+  post("/new_round");
+};
+
+export const selectWinner = (author) => {
+  post("/winner", author);
 };
 
 export const uploadCaption = async (caption) => {

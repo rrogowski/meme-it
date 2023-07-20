@@ -17,6 +17,6 @@ const getDerivedState = () => {
   const authors = captions.map(({ author }) => author);
   const citizens = players.filter((player) => player !== czar);
   return {
-    canReveal: citizens.every((n) => authors.includes(n)) && authors.length > 0,
+    canReveal: citizens.every((c) => authors.includes(c)) && authors.length > 1,
   };
 };

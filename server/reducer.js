@@ -3,41 +3,41 @@ import { rotateLeft, shuffle } from "./array.js";
 const initialState = {
   captions: [],
   czar: null,
-  index: 0,
   phase: "SELECT_IMAGE",
   players: [],
-  revealed: 0,
+  winner: null,
 };
 
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case "DECIDE_WINNER":
-      return {
-        ...initialState,
-        czar: state.players.find((name) => name !== state.czar),
-        players: rotateLeft(state.players),
-      };
     case "PLAYER_CONNECTED":
-      return state.players.length === 0
-        ? { ...initialState, czar: action.payload, players: [action.payload] }
-        : { ...state, players: state.players.concat(action.payload) };
+      return {
+        ...state,
+        czar: state.czar ?? action.payload,
+        players: state.players.concat(action.payload),
+      };
     case "PLAYER_DISCONNECTED":
       return {
         ...state,
-        players: state.players.filter((name) => name !== action.payload),
+        players: state.players.filter((p) => p !== action.payload),
       };
     case "REVEAL_MEMES":
       return {
         ...state,
         captions: shuffle(state.captions),
         phase: "REVEAL_MEMES",
-        revealed: 1,
       };
-    case "SET_INDEX":
+    case "SELECT_WINNER":
       return {
         ...state,
-        index: action.payload,
-        revealed: Math.max(state.revealed, action.payload + 1),
+        phase: "SHOW_WINNER",
+        winner: action.payload,
+      };
+    case "START_NEW_ROUND":
+      return {
+        ...initialState,
+        czar: state.players.find((p) => p !== state.czar) ?? null,
+        players: rotateLeft(state.players),
       };
     case "UPLOAD_CAPTION":
       return { ...state, captions: state.captions.concat(action.payload) };

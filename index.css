@@ -13,6 +13,7 @@ body {
   background-image: url("client/images/background.jpg");
   background-size: cover;
   font-size: 2rem;
+  height: 100dvh;
 }
 
 button {
