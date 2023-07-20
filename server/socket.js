@@ -5,6 +5,7 @@ import { dispatch, getState } from "./store.js";
 const END_OF_HTTP_RESPONSE = "\n\n";
 const WEB_SOCKET_FIN_FLAG = 0x80;
 const WEB_SOCKET_GUID = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11";
+const WEB_SOCKET_MAX_PAYLOAD_LENGTH = 125;
 const WEB_SOCKET_OPT_CODE_TEXT = 0x01;
 
 const sockets = [];
@@ -47,12 +48,13 @@ export const acceptWebSocketUpgrade = (request, socket) => {
 
 export const broadcastState = () => {
   const state = getState();
-  let frame = JSON.stringify(state);
-  while (frame.length > 0) {
-    sockets.forEach((socket) => {
-      sendTextFrame(socket, frame.slice(0, 125));
-    });
-    frame = frame.slice(125);
+  let data = JSON.stringify(state);
+  while (data.length > 0) {
+    const payload = data.slice(0, WEB_SOCKET_MAX_PAYLOAD_LENGTH);
+    const frame = createTextFrame(payload);
+    console.debug("[SOCKET] send", frame[1], frame.subarray(2).toString());
+    sockets.forEach((socket) => socket.write(frame));
+    data = data.slice(WEB_SOCKET_MAX_PAYLOAD_LENGTH);
   }
 };
 
@@ -74,15 +76,12 @@ const generateAcceptanceKey = (request) => {
   return sha1.digest("base64");
 };
 
-const sendTextFrame = function (socket, text) {
-  const payload = Buffer.alloc(text.length);
-  payload.write(text);
+const createTextFrame = (payload) => {
   const firstByte = WEB_SOCKET_FIN_FLAG | WEB_SOCKET_OPT_CODE_TEXT;
-  const secondByte = text.length; // mask and payload len
-  let frame = Buffer.concat([
+  const secondByte = Buffer.from(payload).length;
+  return Buffer.concat([
     Buffer.from([firstByte]),
     Buffer.from([secondByte]),
-    payload,
+    Buffer.from(payload),
   ]);
-  socket.write(frame);
 };
