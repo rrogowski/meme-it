@@ -40,9 +40,16 @@ export const reducer = (state = initialState, action) => {
         players: rotateLeft(state.players),
       };
     case "UPLOAD_CAPTION":
-      return { ...state, captions: state.captions.concat(action.payload) };
+      return {
+        ...state,
+        captions: state.captions.concat(action.payload),
+      };
     case "UPLOAD_IMAGE":
-      return { ...state, phase: "CAPTION_IMAGE", src: action.payload };
+      return {
+        ...state,
+        phase: "CAPTION_IMAGE",
+        src: action.payload,
+      };
     default:
       return state;
   }
