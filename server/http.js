@@ -9,6 +9,7 @@ let lastImage = null;
 export const server = createServer();
 server.on("upgrade", acceptWebSocketUpgrade);
 server.on("request", async (request, response) => {
+  console.debug("[HTTP]", request.method, request.url);
   response.setHeader("Access-Control-Allow-Origin", "*");
   switch (request.url) {
     case "/caption": {
