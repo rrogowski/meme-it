@@ -13,6 +13,7 @@ export const acceptWebSocketUpgrade = (request, socket) => {
   const response = generateAcceptanceResponse(request);
   socket.write(response);
   sockets.push(socket);
+  console.debug("[SOCKET] open");
 
   const url = new URL(request.url, `ws://${request.headers.host}`);
   const name = url.searchParams.get("name");
@@ -30,10 +31,11 @@ export const acceptWebSocketUpgrade = (request, socket) => {
     socket.read();
   });
   socket.on("error", (error) => {
-    console.error(error);
+    console.debug("[SOCKET] error", error);
     socket.emit("end");
   });
   socket.on("end", () => {
+    console.debug("[SOCKET] end");
     sockets.splice(sockets.indexOf(socket), 1);
     if (isHost) {
       dispatch({ type: "HOST_DISCONNECTED" });
@@ -45,13 +47,13 @@ export const acceptWebSocketUpgrade = (request, socket) => {
 
 export const broadcastState = () => {
   const state = getState();
-  sockets.forEach((socket) => {
-    let frame = JSON.stringify(state);
-    while (frame.length > 0) {
+  let frame = JSON.stringify(state);
+  while (frame.length > 0) {
+    sockets.forEach((socket) => {
       sendTextFrame(socket, frame.slice(0, 125));
-      frame = frame.slice(125);
-    }
-  });
+    });
+    frame = frame.slice(125);
+  }
 };
 
 const generateAcceptanceResponse = (request) => {

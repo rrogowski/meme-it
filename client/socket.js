@@ -15,12 +15,12 @@ export const initializeWebSocket = (options = {}) => {
 };
 
 const onOpen = () => {
-  console.debug("[WEBSOCKET] open");
+  console.debug("[SOCKET] open");
   socketState.didOpen = true;
 };
 
 const onMessage = (event) => {
-  console.debug("[WEBSOCKET] message", event.data);
+  console.debug("[SOCKET] message", event.data);
   stream += event.data;
   const updates = tryJsonParse(stream);
   if (updates !== null) {
@@ -30,11 +30,11 @@ const onMessage = (event) => {
 };
 
 const onClose = () => {
-  console.debug("[WEBSOCKET] close");
+  console.debug("[SOCKET] close");
   stream = "";
   dispatch({ type: "WEB_SOCKET_CLOSED" });
   if (socketState.didOpen) {
-    console.debug("[WEBSOCKET] reconnect");
+    console.debug("[SOCKET] reconnect");
     initializeWebSocket(socketState.options);
   }
 };
