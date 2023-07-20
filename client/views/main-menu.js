@@ -28,6 +28,5 @@ const joinAsPlayer = () => {
 };
 
 const setName = (event) => {
-  window.localStorage.setItem("name", event.target.value);
   dispatch({ type: "SET_NAME", payload: event.target.value });
 };
