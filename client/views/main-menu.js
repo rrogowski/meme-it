@@ -1,9 +1,9 @@
 import { initializeWebSocket } from "../socket.js";
-import { dispatch, getState } from "../store.js";
+import { dispatch, getCurrentState } from "../store.js";
 import { button, div, input } from "../ui.js";
 
 export const MainMenu = () => {
-  const { name } = getState();
+  const { name } = getCurrentState();
   const { isHost } = getDerivedState();
   return div(
     { className: "page" },
@@ -14,7 +14,7 @@ export const MainMenu = () => {
 };
 
 const getDerivedState = () => {
-  const { name } = getState();
+  const { name } = getCurrentState();
   return { isHost: name === "" };
 };
 
@@ -23,7 +23,7 @@ const joinAsHost = () => {
 };
 
 const joinAsPlayer = () => {
-  const { name } = getState();
+  const { name } = getCurrentState();
   initializeWebSocket({ name });
 };
 

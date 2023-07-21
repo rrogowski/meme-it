@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import { URL } from "node:url";
-import { dispatch, getState } from "./store.js";
+import { dispatch, getCurrentState } from "./store.js";
 
 const END_OF_HTTP_RESPONSE = "\n\n";
 const WEB_SOCKET_FIN_FLAG = 0x80;
@@ -47,7 +47,7 @@ export const acceptWebSocketUpgrade = (request, socket) => {
 };
 
 export const broadcastState = () => {
-  const state = getState();
+  const state = getCurrentState();
   let data = JSON.stringify(state);
   while (data.length > 0) {
     const payload = data.slice(0, WEB_SOCKET_MAX_PAYLOAD_LENGTH);

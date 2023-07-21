@@ -1,9 +1,9 @@
 import { revealMemes } from "../http.js";
-import { getState } from "../store.js";
+import { getCurrentState } from "../store.js";
 import { button, div, p } from "../ui.js";
 
 export const CzarCaptionImage = () => {
-  const { captions } = getState();
+  const { captions } = getCurrentState();
   const { canReveal } = getDerivedState();
   return div(
     { className: "page" },
@@ -13,7 +13,7 @@ export const CzarCaptionImage = () => {
 };
 
 const getDerivedState = () => {
-  const { captions, czar, players } = getState();
+  const { captions, czar, players } = getCurrentState();
   const authors = captions.map(({ author }) => author);
   const citizens = players.filter((player) => player !== czar);
   return {

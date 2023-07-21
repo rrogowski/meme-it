@@ -11,7 +11,7 @@ export const dispatch = (action) => {
   listeners.forEach((listener) => listener());
 };
 
-export const getState = () => {
+export const getCurrentState = () => {
   return Object.freeze({ ...state });
 };
 

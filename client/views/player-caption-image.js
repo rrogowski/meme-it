@@ -1,5 +1,5 @@
 import { uploadCaption } from "../http.js";
-import { dispatch, getState } from "../store.js";
+import { dispatch, getCurrentState } from "../store.js";
 import { button, div, input } from "../ui.js";
 import { Meme } from "./meme.js";
 import { WaitingLogo } from "./waiting-logo.js";
@@ -10,7 +10,7 @@ export const PlayerCaptionImage = () => {
     return div({ className: "page" }, WaitingLogo());
   }
 
-  const { bottomText, src, topText } = getState();
+  const { bottomText, src, topText } = getCurrentState();
   const { isValid } = getDerivedState();
   return div(
     { className: "page" },
@@ -22,7 +22,7 @@ export const PlayerCaptionImage = () => {
 };
 
 const getDerivedState = () => {
-  const { bottomText, captions, name, topText } = getState();
+  const { bottomText, captions, name, topText } = getCurrentState();
   const authors = captions.map(({ author }) => author);
   return {
     didSubmitCaption: authors.includes(name),
@@ -39,6 +39,6 @@ const setTopText = (event) => {
 };
 
 const submitCaption = () => {
-  const { bottomText, name, topText } = getState();
+  const { bottomText, name, topText } = getCurrentState();
   uploadCaption({ author: name, bottomText, topText });
 };

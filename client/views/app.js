@@ -1,4 +1,4 @@
-import { getState } from "../store.js";
+import { getCurrentState } from "../store.js";
 import { CzarCaptionImage } from "./czar-caption-image.js";
 import { CzarRevealMemes } from "./czar-reveal-memes.js";
 import { CzarSelectImage } from "./czar-select-image.js";
@@ -14,7 +14,7 @@ import { PlayerSelectImage } from "./player-select-image.js";
 import { PlayerShowWinner } from "./player-show-winner.js";
 
 export const App = () => {
-  const { phase } = getState();
+  const { phase } = getCurrentState();
   const { isCzar, isHost } = getDerivedState();
   switch (phase) {
     case "SELECT_IMAGE":
@@ -47,6 +47,6 @@ export const App = () => {
 };
 
 const getDerivedState = () => {
-  const { czar, name } = getState();
+  const { czar, name } = getCurrentState();
   return { isCzar: name === czar, isHost: name === "" };
 };

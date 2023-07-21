@@ -1,11 +1,11 @@
 import { openFileDialog, readAsDataURL } from "../file.js";
 import { uploadImage } from "../http.js";
-import { getState } from "../store.js";
+import { getCurrentState } from "../store.js";
 import { button, div, input } from "../ui.js";
 import { Meme } from "./meme.js";
 
 export const CzarSelectImage = () => {
-  const { preview } = getState();
+  const { preview } = getCurrentState();
   return div(
     { className: "page" },
     input({ accept: "image/*", onchange: openFile, type: "file" }),
@@ -25,6 +25,6 @@ const openFile = (event) => {
 };
 
 const submitImage = () => {
-  const { preview } = getState();
+  const { preview } = getCurrentState();
   uploadImage(preview);
 };

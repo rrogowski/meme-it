@@ -1,9 +1,9 @@
-import { getState } from "../store.js";
+import { getCurrentState } from "../store.js";
 import { div, p } from "../ui.js";
 import { Meme } from "./meme.js";
 
 export const HostRevealMemes = () => {
-  const { captions, src } = getState();
+  const { captions, src } = getCurrentState();
   return div(
     { className: "page" },
     p("Waiting for decision..."),

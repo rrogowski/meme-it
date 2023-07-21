@@ -1,10 +1,10 @@
 import { selectWinner } from "../http.js";
-import { getState } from "../store.js";
+import { getCurrentState } from "../store.js";
 import { button, div } from "../ui.js";
 import { Meme } from "./meme.js";
 
 export const CzarRevealMemes = () => {
-  const { captions, src } = getState();
+  const { captions, src } = getCurrentState();
   return div(
     { className: "page" },
     div(

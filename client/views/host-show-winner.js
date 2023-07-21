@@ -1,9 +1,9 @@
-import { getState } from "../store.js";
+import { getCurrentState } from "../store.js";
 import { div, p } from "../ui.js";
 import { Meme } from "./meme.js";
 
 export const HostShowWinner = () => {
-  const { src } = getState();
+  const { src } = getCurrentState();
   const { caption } = getDerivedState();
   return div(
     { className: "page" },
@@ -14,6 +14,6 @@ export const HostShowWinner = () => {
 };
 
 const getDerivedState = () => {
-  const { captions, winner } = getState();
+  const { captions, winner } = getCurrentState();
   return { caption: captions.find((c) => c.author === winner) };
 };
