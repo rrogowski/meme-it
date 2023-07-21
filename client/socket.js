@@ -1,42 +1,38 @@
-import { dispatch, getState } from "./store.js";
+import { dispatch } from "./store.js";
 
+let isOpen = false;
 let stream = "";
-let socketState = {};
 
 export const initializeWebSocket = (options = {}) => {
+  if (isOpen) {
+    return;
+  }
   const searchParams = new URLSearchParams(options);
   const url = `ws://${window.location.hostname}:9000/?${searchParams}`;
   const socket = new WebSocket(url);
-  socketState.didOpen = false;
-  socketState.options = options;
-  socket.addEventListener("open", onOpen);
-  socket.addEventListener("message", onMessage);
-  socket.addEventListener("close", onClose);
-};
-
-const onOpen = () => {
-  console.debug("[SOCKET] open");
-  socketState.didOpen = true;
-};
-
-const onMessage = (event) => {
-  console.debug("[SOCKET] message", event.data);
-  stream += event.data;
-  const updates = tryJsonParse(stream);
-  if (updates !== null) {
+  socket.addEventListener("open", () => {
+    console.debug("[SOCKET] open");
+    isOpen = true;
+  });
+  socket.addEventListener("message", (event) => {
+    console.debug("[SOCKET] message", event.data);
+    stream += event.data;
+    const updates = tryJsonParse(stream);
+    if (updates !== null) {
+      stream = "";
+      dispatch({ type: "SERVER_SYNCED", payload: updates });
+    }
+  });
+  socket.addEventListener("close", () => {
+    console.debug("[SOCKET] close");
     stream = "";
-    dispatch({ type: "SERVER_SYNCED", payload: updates });
-  }
-};
-
-const onClose = () => {
-  console.debug("[SOCKET] close");
-  stream = "";
-  dispatch({ type: "WEB_SOCKET_CLOSED" });
-  if (socketState.didOpen) {
-    console.debug("[SOCKET] reconnect");
-    initializeWebSocket(socketState.options);
-  }
+    dispatch({ type: "WEB_SOCKET_CLOSED" });
+    if (isOpen) {
+      isOpen = false;
+      console.debug("[SOCKET] reconnect");
+      initializeWebSocket(options);
+    }
+  });
 };
 
 const tryJsonParse = (body) => {
