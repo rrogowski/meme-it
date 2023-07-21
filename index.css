@@ -40,8 +40,9 @@ p {
 .page {
   container-type: size;
   display: flex;
-  height: 100dvh;
   flex-direction: column;
+  height: 100dvh;
+  justify-content: center;
   padding: 1rem;
   padding-bottom: 0;
   text-align: center;
