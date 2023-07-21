@@ -52,7 +52,7 @@ export const broadcastState = () => {
   while (data.length > 0) {
     const payload = data.slice(0, WEB_SOCKET_MAX_PAYLOAD_LENGTH);
     const frame = createTextFrame(payload);
-    console.debug("[SOCKET] send", frame[1], frame.subarray(2).toString());
+    console.debug("[SOCKET] send", frame.subarray(2).toString());
     sockets.forEach((socket) => socket.write(frame));
     data = data.slice(WEB_SOCKET_MAX_PAYLOAD_LENGTH);
   }
